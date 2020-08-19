@@ -4,3 +4,6 @@
 # C# build artifacts
 bin/
 obj/
+
+# NuGet
+.nuget/
