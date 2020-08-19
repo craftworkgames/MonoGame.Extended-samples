@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <TieredCompilation>false</TieredCompilation>
+  </PropertyGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="**\*.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1375-develop" />
+    <PackageReference Include="MonoGame.Extended" Version="3.8.0-alpha0091" />
+    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.8.0-alpha0091" />
+    <PackageReference Include="MonoGame.Extended.Input" Version="3.8.0-alpha0091" />
+    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.8.0-alpha0091" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1375-develop" />
+  </ItemGroup>
+</Project>
