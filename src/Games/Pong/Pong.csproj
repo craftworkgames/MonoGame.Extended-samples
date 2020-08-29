@@ -12,10 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
-    <PackageReference Include="MonoGame.Extended" Version="3.9.0-alpha0001" />
-    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.9.0-alpha0001" />
-    <PackageReference Include="MonoGame.Extended.Gui" Version="3.9.0-alpha0001" />
-    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.9.0-alpha0001" />
+    <PackageReference Include="MonoGame.Extended" Version="3.8" />
+    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.8" />
+    <PackageReference Include="MonoGame.Extended.Gui" Version="3.8" />
+    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.8" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
   </ItemGroup>
 </Project>
