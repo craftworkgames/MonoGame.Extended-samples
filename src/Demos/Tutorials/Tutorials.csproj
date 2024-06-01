@@ -41,6 +41,6 @@
     <PackageReference Include="MonoGame.Extended.Particles" Version="3.8" />
     <PackageReference Include="MonoGame.Extended.SceneGraphs" Version="3.8" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>
