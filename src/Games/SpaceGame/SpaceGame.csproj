@@ -13,8 +13,8 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Extended" Version="3.8" />
-    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.8" />
+    <PackageReference Include="MonoGame.Extended" Version="3.9.0-prerelease.4" />
+    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.9.0-prerelease.4" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
