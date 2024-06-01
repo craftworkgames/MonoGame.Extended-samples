@@ -20,7 +20,6 @@
     <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.9.0-prerelease.4" />
     <PackageReference Include="MonoGame.Extended.Entities" Version="3.9.0-prerelease.4" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
