@@ -78,6 +78,9 @@ namespace Tweening
 
         protected override void Update(GameTime gameTime)
         {
+            KeyboardExtended.Refresh();
+            MouseExtended.Refresh();
+
             var keyboardState = KeyboardExtended.GetState();
             var mouseState = MouseExtended.GetState();
             var elapsedSeconds = gameTime.GetElapsedSeconds();
