@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <TieredCompilation>false</TieredCompilation>
+  </PropertyGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="**\*.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Features\MainWindow.mgeml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Features\MainWindow.mgeml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\MonoGame.Extended\source\MonoGame.Extended\MonoGame.Extended.csproj" />
+    <ProjectReference Include="..\..\..\..\MonoGame.Extended\source\MonoGame.Extended.Content.Pipeline\MonoGame.Extended.Content.Pipeline.csproj" />
+    <ProjectReference Include="..\..\..\..\MonoGame.Extended\source\MonoGame.Extended.Gui\MonoGame.Extended.Gui.csproj" />
+  </ItemGroup>
+</Project>
