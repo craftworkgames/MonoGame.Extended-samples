@@ -1,0 +1,48 @@
+################################################################################
+### Default behavior
+###     - Treat as text
+###     - Normalize to Unix-style line endings
+################################################################################
+*                   text        eol=lf
+
+################################################################################
+### C# source file behavior
+###     - Treat as text
+###     - Normalize to Unix-style line endings
+###     - Diff as csharp
+################################################################################
+*.cs                text        eol=lf          diff=csharp
+
+################################################################################
+### csproj file behavior
+###     - Treat as text
+###     - Normalize to Unix-style line endings
+###     - Use a union merge when resolving conflicts
+################################################################################
+.csproj             text        eol=lf          merge=union
+
+################################################################################
+### sln file behavior
+###     - Treat as text
+###     - Normalize to Windows-style line endings
+###     - Use a union merge when resolving conflicts
+################################################################################
+*.sln               text        eol=crlf        merge=union
+
+################################################################################
+### image file behavior
+###     - Treat as binary
+################################################################################
+*.bmp               binary
+*.gif               binary
+*.ico               binary
+*.jpg               binary
+*.jpeg              binary
+*.png               binary
+*.webp              binary
+
+################################################################################
+### MGFXO file behavior
+###     - Treat as binary
+################################################################################
+*.mgfxo             binary
