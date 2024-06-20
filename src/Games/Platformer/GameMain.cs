@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using MonoGame.Extended.Entities;
+using MonoGame.Extended.Input;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using Platformer.Systems;
@@ -72,6 +73,9 @@ namespace Platformer
         protected override void Update(GameTime gameTime)
         {
             // TODO: Using global shared input state is really bad!
+
+            KeyboardExtended.Refresh();
+            MouseExtended.Refresh();
 
             //var keyboardState = KeyboardExtended.GetState();
 
