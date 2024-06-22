@@ -2,5 +2,5 @@
 // Licensed under the MIT license.
 // See LICENSE file in the project root for full license information.
 
-using var game = new Texture2DAtlasFeature.Game1();
+using var game = new Texture2DRegionExample.Game1();
 game.Run();
