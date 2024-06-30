@@ -19,7 +19,7 @@ namespace Tutorials.Demos
     {
         public override string Name => "Particles";
 
-        public ParticlesDemo(GameMain game) 
+        public ParticlesDemo(GameMain game)
             : base(game)
         {
         }
@@ -92,7 +92,7 @@ namespace Tutorials.Demos
 
         private void ParticleInit(TextureRegion2D textureRegion)
         {
-            _particleEffect = new ParticleEffect(autoTrigger: false)
+            _particleEffect = new ParticleEffect()
             {
                 Position = new Vector2(400, 240),
                 Emitters = new List<ParticleEmitter>
@@ -107,11 +107,11 @@ namespace Tutorials.Demos
                             Rotation = new Range<float>(-1f, 1f),
                             Scale = new Range<float>(3.0f, 4.0f)
                         },
-                        Modifiers = 
+                        Modifiers =
                         {
                             new AgeModifier
                             {
-                                Interpolators = 
+                                Interpolators =
                                 {
                                     new ColorInterpolator
                                     {
