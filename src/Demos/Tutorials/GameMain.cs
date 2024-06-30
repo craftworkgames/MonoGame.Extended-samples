@@ -44,7 +44,6 @@ namespace Tutorials
                 new SpritesDemo(this),
                 new BatchingDemo(this),
                 new InputListenersDemo(this),
-                new SceneGraphsDemo(this),
                 new ParticlesDemo(this),
                 new CameraDemo(this),
                 new BitmapFontsDemo(this)
