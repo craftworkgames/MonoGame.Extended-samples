@@ -10,7 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\..\..\.nuget\packages\monogame.extended.content.pipeline\3.9.0-prerelease.4\tools\MonoGame.Extended.Content.Pipeline.dll
+/reference:..\..\..\..\MonoGame.Extended\.artifacts\source\bin\MonoGame.Extended.Content.Pipeline\debug\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
