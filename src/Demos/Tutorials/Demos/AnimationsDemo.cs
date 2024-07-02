@@ -6,8 +6,9 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Animations;
 using MonoGame.Extended.Content;
+using MonoGame.Extended.Content.ContentReaders;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
 
 namespace Tutorials.Demos
@@ -26,7 +27,7 @@ namespace Tutorials.Demos
 
         public AnimationsDemo(GameMain game) : base(game)
         {
-            ContentTypeReaderManager.AddTypeCreator("TextureAtlas", () => new TextureAtlasJsonContentTypeReader());
+            ContentTypeReaderManager.AddTypeCreator("TextureAtlas", () => new Texture2DAtlasJsonContentTypeReader());
             ContentTypeReaderManager.AddTypeCreator("Default", () => new JsonContentTypeReader<TexturePackerFile>());
         }
 
@@ -74,7 +75,7 @@ namespace Tutorials.Demos
         {
             var spriteSheet = Content.Load<SpriteSheet>("Animations/zombie.spritesheet", new JsonContentLoader());
             var sprite = new AnimatedSprite(spriteSheet);
-            sprite.Play("idle");
+            sprite.SetAnimation("idle");
             return sprite;
         }
 
@@ -82,7 +83,7 @@ namespace Tutorials.Demos
         {
             var spriteSheet = Content.Load<SpriteSheet>("Animations/motw.sf", new JsonContentLoader());
             var sprite = new AnimatedSprite(spriteSheet);
-            sprite.Play("idle");
+            sprite.SetAnimation("idle");
 
             _motwPosition = new Vector2(100, 100);
 
@@ -95,29 +96,17 @@ namespace Tutorials.Demos
             // after the texture is loaded, we can split it up into it's different sprites using texture atlas.
             // then we make a sprite sheet do define the frames of the animation.
             var texture = Content.Load<Texture2D>("Animations/fireball");
-            var textureAtlas = TextureAtlas.Create("Animations/fireball-atlas", texture, 130, 50);
-            var spriteSheet = new SpriteSheet
+            var textureAtlas = Texture2DAtlas.Create("Animations/fireball-atlas", texture, 130, 50);
+            var spriteSheet = new SpriteSheet("SpriteSheet//fireball", textureAtlas);
+            spriteSheet.DefineAnimation("flaming", builder =>
             {
-                TextureAtlas = textureAtlas,
-                Cycles =
-                {
-                    {
-                        "flaming", new SpriteSheetAnimationCycle
-                        {
-                            IsLooping = true,
-                            IsPingPong = true,
-                            FrameDuration = 0.2f,
-                            Frames =
-                            {
-                                // TODO: Fix per frame duration
-                                new SpriteSheetAnimationFrame(0, duration: 0.1f),
-                                new SpriteSheetAnimationFrame(1, duration: 0.15f),
-                                new SpriteSheetAnimationFrame(2, duration: 0.3f)
-                            }
-                        }
-                    }
-                }
-            };
+                builder.IsLooping(true)
+                       .IsPingPong(true)
+                       .AddFrame(0, TimeSpan.FromSeconds(0.1f))
+                       .AddFrame(1, TimeSpan.FromSeconds(0.15f))
+                       .AddFrame(2, TimeSpan.FromSeconds(0.3f));
+            });
+
             return new AnimatedSprite(spriteSheet, "flaming");
         }
 
@@ -153,7 +142,7 @@ namespace Tutorials.Demos
                 _motwPosition.X += walkSpeed;
             }
 
-            _motwSprite.Play(animation);
+            _motwSprite.SetAnimation(animation);
 
             // camera
             if (keyboardState.IsKeyDown(Keys.R))
@@ -187,8 +176,8 @@ namespace Tutorials.Demos
             //_fireballSprite.TextureRegion = _animation.CurrentFrame;
 
             //_zombie.Update(deltaSeconds);
-            _motwSprite.Update(deltaSeconds);
-            _fireballSprite.Update(deltaSeconds);
+            _motwSprite.Update(gameTime);
+            _fireballSprite.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -222,7 +211,7 @@ namespace Tutorials.Demos
         Dying
     }
 
-    public class Zombie : IUpdate
+    public class Zombie
     {
         private readonly AnimatedSprite _sprite;
         private float _direction = -1.0f;
@@ -251,19 +240,43 @@ namespace Tutorials.Demos
                     switch (_state)
                     {
                         case ZombieState.Attacking:
-                            _sprite.Play("attack", () => State = ZombieState.Idle);
+                            _sprite.SetAnimation("attack").OnAnimationEvent += (s, e) =>
+                            {
+                                if (e == AnimationEventTrigger.AnimationCompleted)
+                                {
+                                    State = ZombieState.Idle;
+                                }
+                            };
                             break;
                         case ZombieState.Dying:
-                            _sprite.Play("die", () => State = ZombieState.Appearing);
+                            _sprite.SetAnimation("die").OnAnimationEvent += (s, e) =>
+                            {
+                                if (e == AnimationEventTrigger.AnimationCompleted)
+                                {
+                                    State = ZombieState.Appearing;
+                                }
+                            };
                             break;
                         case ZombieState.Idle:
-                            _sprite.Play("idle");
+                            _sprite.SetAnimation("idle");
                             break;
                         case ZombieState.Appearing:
-                            _sprite.Play("appear", () => State = ZombieState.Idle);
+                            _sprite.SetAnimation("appear").OnAnimationEvent += (s, e) =>
+                            {
+                                if (e == AnimationEventTrigger.AnimationCompleted)
+                                {
+                                    State = ZombieState.Idle;
+                                }
+                            };
                             break;
                         case ZombieState.Walking:
-                            _sprite.Play("walk", () => State = ZombieState.Idle);
+                            _sprite.SetAnimation("walk").OnAnimationEvent += (s, e) =>
+                            {
+                                if (e == AnimationEventTrigger.AnimationCompleted)
+                                {
+                                    State = ZombieState.Idle;
+                                }
+                            };
                             break;
                     }
                 }

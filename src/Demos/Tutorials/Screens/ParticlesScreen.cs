@@ -10,19 +10,14 @@ using MonoGame.Extended.Particles.Modifiers;
 using MonoGame.Extended.Particles.Modifiers.Containers;
 using MonoGame.Extended.Particles.Modifiers.Interpolators;
 using MonoGame.Extended.Particles.Profiles;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using Tutorials.Screens;
 
 namespace Tutorials.Demos
 {
-    public class ParticlesDemo : DemoBase
+    public class ParticlesScreen : GameScreen
     {
-        public override string Name => "Particles";
-
-        public ParticlesDemo(GameMain game)
-            : base(game)
-        {
-        }
-
         private SpriteBatch _spriteBatch;
         private Sprite _sprite;
         private Transform2 _transform;
@@ -30,11 +25,16 @@ namespace Tutorials.Demos
         private ParticleEffect _particleEffect;
         private Texture2D _particleTexture;
 
-        protected override void LoadContent()
+        public new GameMain Game => (GameMain)base.Game;
+
+        public ParticlesScreen(GameMain game) : base(game){ }
+
+
+        public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportAdapter);
 
             var logoTexture = Content.Load<Texture2D>("Textures/logo-square-128");
@@ -47,14 +47,15 @@ namespace Tutorials.Demos
             ParticleInit(new Texture2DRegion(_particleTexture));
         }
 
-        protected override void UnloadContent()
+
+        public override void UnloadContent()
         {
             // any content not loaded with the content manager should be disposed
             _particleTexture.Dispose();
             _particleEffect.Dispose();
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
@@ -62,7 +63,9 @@ namespace Tutorials.Demos
             var p = _camera.ScreenToWorld(mouseState.X, mouseState.Y);
 
             if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.ScreenManager.LoadScreen(new MainMenuScreen(Game));
+            }
 
             _transform.Rotation += deltaTime;
 
@@ -73,20 +76,14 @@ namespace Tutorials.Demos
 
             //_particleEffect.Position = new Vector2(400, 240);
             //_particleEffect.Trigger(new Vector2(400, 240));
-
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend, transformMatrix: _camera.GetViewMatrix());
             _spriteBatch.Draw(_particleEffect);
             _spriteBatch.Draw(_sprite, _transform.Position, _transform.Rotation, _transform.Scale);
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
 
         private void ParticleInit(Texture2DRegion textureRegion)

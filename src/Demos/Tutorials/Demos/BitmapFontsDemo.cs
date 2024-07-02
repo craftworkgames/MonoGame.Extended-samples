@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.TextureAtlases;
 using MonoGame.Extended.ViewportAdapters;
 
@@ -44,8 +45,8 @@ namespace Tutorials.Demos
             // this is a way to create a font in pure code without a font file.
             const string characters = @" !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
             var monospacedTexture = Content.Load<Texture2D>("Fonts/monospaced");
-            var atlas = TextureAtlas.Create("monospaced-atlas", monospacedTexture, 16, 16);
-            var fontRegions = new BitmapFontRegion[characters.Length];
+            var atlas = Texture2DAtlas.Create("monospace-atlas", monospacedTexture, 16, 16);
+            var fontRegions = new BitmapFontCharacter[characters.Length];
             var index = 0;
 
             for (var y = 0; y < monospacedTexture.Height; y += 16)
@@ -54,13 +55,13 @@ namespace Tutorials.Demos
                 {
                     if (index < characters.Length)
                     {
-                        fontRegions[index] = new BitmapFontRegion(atlas[index], characters[index], 0, 0, 16);
+                        fontRegions[index] = new BitmapFontCharacter(characters[index], atlas[index], 0, 0, 16);
                         index++;
                     }
                 }
             }
 
-            return new BitmapFont("monospaced", fontRegions, 16);
+            return new BitmapFont("monospaced", 32, 16, fontRegions);
         }
 
         protected override void Update(GameTime gameTime)
@@ -102,7 +103,7 @@ namespace Tutorials.Demos
 
             const string helloWorld = "The quick brown fox jumps over the lazy dog\nThe lazy dog jumps back over the quick brown fox";
 
-            var position = new Point2(400, 140);
+            var position = new Vector2(400, 140);
             var offset = new Vector2(0, 50);
             var scale = Vector2.One;
             var color = Color.White;
@@ -110,7 +111,7 @@ namespace Tutorials.Demos
 
             // bitmap font
             var bitmapFontSize = _bitmapFontImpact.MeasureString(helloWorld);
-            var bitmapFontOrigin = (Point2)(bitmapFontSize / 2f);
+            var bitmapFontOrigin = (Vector2)(bitmapFontSize / 2f);
 
             _spriteBatch.DrawString(
                 bitmapFont: _bitmapFontImpact,

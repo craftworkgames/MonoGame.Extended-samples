@@ -7,6 +7,7 @@ using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Graphics.Effects;
 
+
 namespace Tutorials.Demos
 {
     public struct SpriteInfo
@@ -15,7 +16,7 @@ namespace Tutorials.Demos
         public float Rotation;
         public Color Color;
         public Texture2D Texture;
-        public Matrix2 TransformMatrix;
+        public Matrix3x2 TransformMatrix;
     }
 
     public class BatchingDemo : DemoBase
@@ -104,7 +105,7 @@ namespace Tutorials.Demos
 
                 sprite.Color = ColorHelper.FromHsl(sprite.Rotation / MathHelper.TwoPi, 0.5f, 0.3f);
 
-                sprite.TransformMatrix = Matrix2.CreateFrom(sprite.Position, sprite.Rotation, _spriteScale, _spriteOrigin);
+                sprite.TransformMatrix = Matrix3x2.CreateFrom(sprite.Position, sprite.Rotation, _spriteScale, _spriteOrigin);
 
                 _sprites[index] = sprite;
             }

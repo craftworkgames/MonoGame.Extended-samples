@@ -186,7 +186,7 @@ namespace Tutorials.Demos
             var textColor = Color.Black;
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp, blendState: BlendState.AlphaBlend);
 
-            var baseTextPosition = new Point2(5, 0);
+            var baseTextPosition = new Vector2(5, 0);
             var textPosition = baseTextPosition;
             _spriteBatch.DrawString(_bitmapFont,
                 $"Map: {_map.Name}; {_map.TileLayers.Count} tile layer(s) @ {_map.Width}x{_map.Height} tiles, {_map.ImageLayers.Count} image layer(s)",

@@ -3,8 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace Tutorials.Demos
 {
@@ -21,7 +20,7 @@ namespace Tutorials.Demos
         private Sprite _spikeyBallSprite;
         private SpriteBatch _spriteBatch;
 
-        private TextureRegion2D _clippingTextureRegion;
+        private NinePatch _clippingTextureRegion;
 
         public SpritesDemo(GameMain game) : base(game)
         {
@@ -33,8 +32,8 @@ namespace Tutorials.Demos
 
             _backgroundTexture = Content.Load<Texture2D>("Textures/bg_sharbi");
 
-            var testRegion = new TextureRegion2D(Content.Load<Texture2D>("Textures/clipping-test"));
-            _clippingTextureRegion = new NinePatchRegion2D(testRegion, 16);
+            var testRegion = new Texture2DRegion(Content.Load<Texture2D>("Textures/clipping-test"));
+            _clippingTextureRegion = testRegion.CreateNinePatch(16);
 
             var appleTexture = Content.Load<Texture2D>("Sprites/apple");
             _apple = new Sprite(appleTexture);

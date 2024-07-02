@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
-using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Graphics;
 
 namespace Tutorials.Demos
 {
@@ -122,7 +122,7 @@ namespace Tutorials.Demos
         }
     }
 
-    class DemoActor : ICollisionActor, IUpdate
+    class DemoActor : ICollisionActor
     {
         private readonly Sprite _sprite;
         private Vector2 _position;

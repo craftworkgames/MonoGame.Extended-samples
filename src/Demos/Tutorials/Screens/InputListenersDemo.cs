@@ -5,15 +5,14 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Input.InputListeners;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using Tutorials.Screens;
 
 namespace Tutorials.Demos
 {
-    public class InputListenersDemo : DemoBase
+    public class InputListenersScreen : GameScreen
     {
-        public override string Name => "Input Listeners";
-
-        private readonly GameMain _this;
         private readonly List<string> _logLines = new List<string>();
         private SpriteBatch _spriteBatch;
         private Texture2D _backgroundTexture;
@@ -23,23 +22,26 @@ namespace Tutorials.Demos
         private const float _cursorBlinkDelay = 0.5f;
         private float _cursorBlinkDelta = _cursorBlinkDelay;
         private OrthographicCamera _camera;
+        private InputListenerComponent _inputComponent;
 
-        public InputListenersDemo(GameMain game) : base(game)
-        {
-            _this = game;
-        }
+        public new GameMain Game => (GameMain)base.Game;
 
-        protected override void Initialize()
+        public InputListenersScreen(GameMain game) : base(game) { }
+
+        public override void Initialize()
         {
             var mouseListener = new MouseListener(new MouseListenerSettings());
             var keyboardListener = new KeyboardListener(new KeyboardListenerSettings());
 
-            Components.Add(new InputListenerComponent(_this, mouseListener, keyboardListener));
+            _inputComponent = new InputListenerComponent(Game, mouseListener, keyboardListener);
+            Game.Components.Add(_inputComponent);
 
             keyboardListener.KeyPressed += (sender, args) =>
             {
                 if (args.Key == Keys.Escape)
-                    Exit();
+                {
+                    Game.ScreenManager.LoadScreen(new MainMenuScreen(Game));
+                }
             };
 
             mouseListener.MouseClicked += (sender, args) => LogMessage("{0} mouse button clicked", args.Button);
@@ -85,9 +87,9 @@ namespace Tutorials.Demos
             _logLines.Add(message);
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportAdapter);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -95,11 +97,12 @@ namespace Tutorials.Demos
             _bitmapFont = Content.Load<BitmapFont>("Fonts/montserrat-32");
         }
 
-        protected override void UnloadContent()
+        public override void UnloadContent()
         {
+            Game.Components.Remove(_inputComponent);
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             _cursorBlinkDelta -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -109,10 +112,10 @@ namespace Tutorials.Demos
                 _cursorBlinkDelta = _cursorBlinkDelay;
             }
 
-            base.Update(gameTime);
+            
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, transformMatrix: _camera.GetViewMatrix());
             _spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.DarkSlateGray);
@@ -134,7 +137,7 @@ namespace Tutorials.Demos
 
             _spriteBatch.End();
 
-            base.Draw(gameTime);
+            
         }
     }
 }

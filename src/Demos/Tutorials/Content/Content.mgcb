@@ -14,6 +14,11 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin adventure-gui-atlas.json
+/importer:TexturePackerJsonImporter
+/processor:TexturePackerProcessor
+/build:adventure-gui-atlas.json
+
 #begin adventure-gui.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -25,11 +30,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:adventure-gui.png
-
-#begin adventure-gui-atlas.json
-/importer:TexturePackerJsonImporter
-/processor:TexturePackerProcessor
-/build:adventure-gui-atlas.json
 
 #begin Animations/fireball.png
 /importer:TextureImporter
@@ -55,18 +55,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/motw.png
 
-#begin Animations/zombie.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/zombie.png
-
 #begin Animations/zombie-animations.aa
 /importer:AstridAnimatorImporter
 /processor:AstridAnimatorProcessor
@@ -78,10 +66,17 @@
 /processorParam:ContentType=TextureAtlas
 /build:Animations/zombie-atlas.json
 
-#begin Fonts/impact-32.fnt
-/importer:BitmapFontImporter
-/processor:BitmapFontProcessor
-/build:Fonts/impact-32.fnt
+#begin Animations/zombie.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Animations/zombie.png
 
 #begin Fonts/impact-32_0.png
 /importer:TextureImporter
@@ -95,6 +90,11 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/impact-32_0.png
 
+#begin Fonts/impact-32.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Fonts/impact-32.fnt
+
 #begin Fonts/monospaced.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -106,11 +106,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Fonts/monospaced.png
-
-#begin Fonts/montserrat-32.fnt
-/importer:BitmapFontImporter
-/processor:BitmapFontProcessor
-/build:Fonts/montserrat-32.fnt
 
 #begin Fonts/montserrat-32_0.png
 /importer:TextureImporter
@@ -124,10 +119,22 @@
 /processorParam:TextureFormat=Color
 /build:Fonts/montserrat-32_0.png
 
-#begin small-font.fnt
+#begin Fonts/montserrat-32.fnt
 /importer:BitmapFontImporter
 /processor:BitmapFontProcessor
-/build:small-font.fnt
+/build:Fonts/montserrat-32.fnt
+
+#begin Gui/button_rectangle_border.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Gui/button_rectangle_border.png
 
 #begin small-font_0.png
 /importer:TextureImporter
@@ -140,6 +147,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:small-font_0.png
+
+#begin small-font.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:small-font.fnt
 
 #begin Sprites/apple.png
 /importer:TextureImporter
@@ -225,18 +237,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/colored_castle.png
 
-#begin Textures/hills.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/hills.png
-
 #begin Textures/hills-1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -308,6 +308,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/hills-sky.png
+
+#begin Textures/hills.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/hills.png
 
 #begin Textures/logo-square-128.png
 /importer:TextureImporter
