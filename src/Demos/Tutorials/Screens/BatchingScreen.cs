@@ -6,9 +6,10 @@ using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Graphics.Effects;
+using MonoGame.Extended.Screens;
 
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
     public struct SpriteInfo
     {
@@ -19,10 +20,8 @@ namespace Tutorials.Demos
         public Matrix3x2 TransformMatrix;
     }
 
-    public class BatchingDemo : DemoBase
+    public class BatchingScreen : GameScreen
     {
-        public override string Name => "Batching";
-
         private Batcher2D _batcher;
         private SpriteBatch _spriteBatch;
         private BitmapFont _bitmapFont;
@@ -38,7 +37,9 @@ namespace Tutorials.Demos
         private Matrix _viewMatrix;
         private Matrix _projectionMatrix;
 
-        public BatchingDemo(GameMain game) : base(game)
+        public new GameMain Game => (GameMain)base.Game;
+
+        public BatchingScreen(GameMain game) : base(game)
         {
             // disable fixed time step so max frames can be measured otherwise the update & draw frames would be capped to the default 60 fps timestep
             //game.IsFixedTimeStep = false;
@@ -52,7 +53,7 @@ namespace Tutorials.Demos
             //};
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             var graphicsDevice = GraphicsDevice;
 
@@ -85,13 +86,15 @@ namespace Tutorials.Demos
             }
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var keyboard = Keyboard.GetState();
             var gamePadState = GamePad.GetState(PlayerIndex.One);
 
             if (gamePadState.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
 
             // ReSharper disable once ForCanBeConvertedToForeach
             for (var index = 0; index < _sprites.Length; index++)
@@ -109,11 +112,9 @@ namespace Tutorials.Demos
 
                 _sprites[index] = sprite;
             }
-
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             var graphicsDevice = GraphicsDevice;
 
@@ -128,8 +129,6 @@ namespace Tutorials.Demos
 
             DrawSpritesWithBatcher2D();
             //DrawSpritesWithSpriteBatch();
-
-            base.Draw(gameTime);
         }
 
         private void DrawSpritesWithBatcher2D()

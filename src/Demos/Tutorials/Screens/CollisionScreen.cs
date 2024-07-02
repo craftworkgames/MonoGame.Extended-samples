@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using MonoGame.Extended.Graphics;
+using MonoGame.Extended.Screens;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class CollisionDemo : DemoBase
+    public class CollisionScreen : GameScreen
     {
         private CollisionComponent _collisionComponent;
         private List<DemoActor> _actors;
@@ -18,13 +19,11 @@ namespace Tutorials.Demos
         private Texture2D _blankTexture;
         private DemoBall _controllableBall;
 
-        public CollisionDemo(GameMain game) : base(game)
-        {
-        }
+        public new GameMain Game => (GameMain)base.Game;
 
-        public override string Name { get; } = "Collisions";
+        public CollisionScreen(GameMain game) : base(game) { }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             _collisionComponent = new CollisionComponent(new RectangleF(-10000, -5000, 20000, 10000));
             _actors = new List<DemoActor>();
@@ -81,8 +80,15 @@ namespace Tutorials.Demos
             base.LoadContent();
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+            var keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.Escape))
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
+
             UpdateControlledBall(gameTime, _controllableBall);
 
             foreach (var actor in _actors)
@@ -90,7 +96,6 @@ namespace Tutorials.Demos
                 actor.Update(gameTime);
             }
             _collisionComponent.Update(gameTime);
-            base.Update(gameTime);
         }
 
         private void UpdateControlledBall(GameTime gameTime, DemoActor actor)
@@ -109,7 +114,7 @@ namespace Tutorials.Demos
             actor.Position = position;
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             foreach (var actor in _actors)
@@ -117,8 +122,6 @@ namespace Tutorials.Demos
                 actor.Draw(_spriteBatch);
             }
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 

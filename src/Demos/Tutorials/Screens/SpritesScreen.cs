@@ -4,13 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Graphics;
+using MonoGame.Extended.Screens;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class SpritesDemo : DemoBase
+    public class SpritesScreen : GameScreen
     {
-        public override string Name => "Sprites";
-
         private Sprite _apple;
         private Sprite _axeSprite;
         private Texture2D _backgroundTexture;
@@ -22,11 +21,11 @@ namespace Tutorials.Demos
 
         private NinePatch _clippingTextureRegion;
 
-        public SpritesDemo(GameMain game) : base(game)
-        {
-        }
+        public new GameMain Game => (GameMain)base.Game;
 
-        protected override void LoadContent()
+        public SpritesScreen(GameMain game) : base(game) { }
+
+        public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -64,13 +63,9 @@ namespace Tutorials.Demos
             _particleOpacity = 0.0f;
         }
 
-        protected override void UnloadContent()
-        {
-        }
-
         private MouseState _previousMouseState;
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -78,7 +73,9 @@ namespace Tutorials.Demos
             var mouseState = Mouse.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
 
             //_axeSprite.Rotation = MathHelper.ToRadians(180) + MathHelper.PiOver2 * 0.8f * (float)Math.Sin(gameTime.TotalGameTime.TotalSeconds);
 
@@ -105,13 +102,11 @@ namespace Tutorials.Demos
             }
 
             _previousMouseState = mouseState;
-
-            base.Update(gameTime);
         }
 
         private Rectangle _clippingRectangle = new Rectangle(50 + 32, 250 - 32, 64, 128 + 64);
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp);
             _spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height), Color.White);
@@ -129,7 +124,6 @@ namespace Tutorials.Demos
 
             _spriteBatch.End();
 
-            base.Draw(gameTime);
         }
     }
 }

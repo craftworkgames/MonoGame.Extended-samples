@@ -3,6 +3,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Gum.Wireframe;
+using Microsoft.Xna.Framework;
 using MonoGameGum.Forms.Controls;
 using MonoGameGum.GueDeriving;
 using RenderingLibrary.Graphics;
@@ -46,6 +47,7 @@ public class DemoButton : InteractiveGue
             TextInstance.Width = 0;
             TextInstance.Height = 0;
             TextInstance.Name = nameof(TextInstance);
+            TextInstance.Color = Color.Black;
             TextInstance.WidthUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer;
             TextInstance.HeightUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer;
             TextInstance.XOrigin = RenderingLibrary.Graphics.HorizontalAlignment.Center;

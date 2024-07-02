@@ -64,7 +64,7 @@ namespace Tutorials.Demos
 
             if (keyboardState.IsKeyDown(Keys.Escape))
             {
-                Game.ScreenManager.LoadScreen(new MainMenuScreen(Game));
+                Game.LoadScreen(ScreenName.MainMenu);
             }
 
             _transform.Rotation += deltaTime;

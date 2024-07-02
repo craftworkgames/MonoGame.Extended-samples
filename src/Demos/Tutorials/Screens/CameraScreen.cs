@@ -4,14 +4,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class CameraDemo : DemoBase
+    public class CameraScreen : GameScreen
     {
-        public override string Name => "Camera";
-
         private const float _cloudsRepeatWidth = 800;
         private Texture2D _backgroundClouds;
         private Texture2D[] _backgroundHills;
@@ -23,14 +22,13 @@ namespace Tutorials.Demos
         private SpriteBatch _spriteBatch;
         private Vector2 _worldPosition;
 
-        public CameraDemo(GameMain game) 
-            : base(game)
-        {
-        }
+        public new GameMain Game => (GameMain)base.Game;
 
-        protected override void LoadContent()
+        public CameraScreen(GameMain game) : base(game) { }
+
+        public override void LoadContent()
         {
-            var viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            var viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
             _camera = new OrthographicCamera(viewportAdapter);
 
             _bitmapFont = Content.Load<BitmapFont>("Fonts/montserrat-32");
@@ -46,11 +44,11 @@ namespace Tutorials.Demos
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
-        protected override void UnloadContent()
+        public override void UnloadContent()
         {
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -63,7 +61,9 @@ namespace Tutorials.Demos
             var mouseState = Mouse.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
 
             // the camera properties of the camera can be conrolled to move, zoom and rotate
             const float movementSpeed = 200;
@@ -95,14 +95,10 @@ namespace Tutorials.Demos
                 _camera.ZoomOut(zoomSpeed * deltaTime);
 
             _worldPosition = _camera.ScreenToWorld(new Vector2(mouseState.X, mouseState.Y));
-
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             // the camera produces a view matrix that can be applied to any sprite batch
             var transformMatrix = _camera.GetViewMatrix(Vector2.Zero);
             _spriteBatch.Begin(transformMatrix: transformMatrix);
@@ -140,8 +136,6 @@ namespace Tutorials.Demos
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
             _spriteBatch.DrawString(_bitmapFont, stringBuilder.ToString(), new Vector2(5, 5), Color.DarkBlue);
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }

@@ -6,16 +6,16 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Graphics.Effects;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.ViewportAdapters;
+using Tutorials.Screens;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class TiledMapsDemo : DemoBase
+    public class TiledMapsScreen : GameScreen
     {
-        public override string Name => "Tiled Maps";
-
         private BitmapFont _bitmapFont;
         private OrthographicCamera _camera;
         private SpriteBatch _spriteBatch;
@@ -27,9 +27,9 @@ namespace Tutorials.Demos
         private Effect _customEffect;
         private Queue<string> _availableMaps;
 
-        public TiledMapsDemo(GameMain game) : base(game)
-        {
-        }
+        public new GameMain Game => (GameMain)base.Game;
+
+        public TiledMapsScreen(GameMain game) : base(game) { }
 
         public override void Dispose()
         {
@@ -37,17 +37,17 @@ namespace Tutorials.Demos
             base.Dispose();
         }
 
-        protected override void Initialize()
+        public override void Initialize()
         {
-            _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 1024, 768);
+            _viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 1024, 768);
             _camera = new OrthographicCamera(_viewportAdapter);
 
-            Window.AllowUserResizing = true;
+            Game.Window.AllowUserResizing = true;
 
             base.Initialize();
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _bitmapFont = Content.Load<BitmapFont>("Fonts/montserrat-32");
@@ -77,11 +77,11 @@ namespace Tutorials.Demos
             return _map;
         }
 
-        protected override void UnloadContent()
+        public override void UnloadContent()
         {
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
@@ -89,7 +89,9 @@ namespace Tutorials.Demos
             _mapRenderer.Update(gameTime);
 
             if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
 
             const float cameraSpeed = 500f;
             const float zoomSpeed = 0.3f;
@@ -142,8 +144,6 @@ namespace Tutorials.Demos
                 LookAtMapCenter();
 
             _previousKeyboardState = keyboardState;
-
-            base.Update(gameTime);
         }
 
         private void LookAtMapCenter()
@@ -163,7 +163,7 @@ namespace Tutorials.Demos
             }
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -177,8 +177,6 @@ namespace Tutorials.Demos
             _mapRenderer.Draw(ref viewMatrix, ref projectionMatrix, _customEffect);
 
             DrawText();
-
-            base.Draw(gameTime);
         }
 
         private void DrawText()

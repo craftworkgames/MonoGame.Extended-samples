@@ -1,25 +1,22 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
+using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.Shapes;
 using MonoGame.Extended.VectorDraw;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class ShapesDemo : DemoBase
+    public class ShapesScreen : GameScreen
     {
         private PrimitiveDrawing _primitiveDrawing;
         PrimitiveBatch _primitiveBatch;
         private Matrix _localProjection;
         private Matrix _localView;
 
-        public ShapesDemo(GameMain game) 
-            : base(game)
-        {
-            
-        }
+        public new GameMain Game => (GameMain)base.Game;
 
-        public override string Name => "Shapes";
+        public ShapesScreen(GameMain game) : base(game) { }
 
         private readonly Polygon _polygon = new Polygon(new[]
         {
@@ -31,7 +28,7 @@ namespace Tutorials.Demos
             new Vector2(0, 60),
         });
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             _primitiveBatch = new PrimitiveBatch(GraphicsDevice);
             _primitiveDrawing = new PrimitiveDrawing(_primitiveBatch);
@@ -39,7 +36,17 @@ namespace Tutorials.Demos
             _localView = Matrix.Identity;
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Update(GameTime gameTime)
+        {
+            var keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.Escape))
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
+        }
+
+        public override void Draw(GameTime gameTime)
         {
             _localProjection = Matrix.CreateOrthographicOffCenter(0f, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 0f, 0f, 1f);
             _localView = Matrix.Identity;

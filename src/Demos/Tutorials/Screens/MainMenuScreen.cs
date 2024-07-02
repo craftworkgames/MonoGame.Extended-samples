@@ -6,39 +6,19 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Screens;
-using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGameGum.Forms;
 using MonoGameGum.Forms.Controls;
 using MonoGameGum.GueDeriving;
 using RenderingLibrary;
-using Tutorials.Demos;
 
 namespace Tutorials.Screens;
 
 public class MainMenuScreen : GameScreen
 {
-    private enum Demo
-    {
-        Animation,
-        Batching,
-        BitmapFonts,
-        Camera,
-        Collision,
-        InputListener,
-        Particles,
-        Shapes,
-        Sprites,
-        TiledMaps,
-        ViewportAdapter
-    };
-
-
-    private ContainerRuntime _menu;
+    private ContainerRuntime _root;
     private ViewportAdapter _viewportAdapter;
     private new GameMain Game => (GameMain)base.Game;
-
-
 
     public MainMenuScreen(Game game) : base(game) { }
 
@@ -49,7 +29,16 @@ public class MainMenuScreen : GameScreen
         Texture2D buttonTexture = Game.Content.Load<Texture2D>("Gui/button_rectangle_border");
         _viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
 
-        _menu = new ContainerRuntime()
+        _root = new ContainerRuntime()
+        {
+            Width = _viewportAdapter.VirtualWidth,
+            Height = _viewportAdapter.ViewportHeight,
+            WidthUnits = Gum.DataTypes.DimensionUnitType.Absolute,
+            HeightUnits = Gum.DataTypes.DimensionUnitType.Absolute,
+        };
+        _root.AddToManagers();
+
+        ContainerRuntime _menu = new ContainerRuntime()
         {
             Width = -4,
             Height = -4,
@@ -58,51 +47,46 @@ public class MainMenuScreen : GameScreen
             WidthUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer,
             HeightUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer,
             ChildrenLayout = Gum.Managers.ChildrenLayout.AutoGridHorizontal,
+            XOrigin = RenderingLibrary.Graphics.HorizontalAlignment.Center,
+            YOrigin = RenderingLibrary.Graphics.VerticalAlignment.Center,
+            XUnits = Gum.Converters.GeneralUnitType.PixelsFromMiddle,
+            YUnits = Gum.Converters.GeneralUnitType.PixelsFromMiddle,
             AutoGridHorizontalCells = 4,
             WrapsChildren = true
         };
+        _root.Children.Add(_menu);
 
-        _menu.AddToManagers();
-
-        foreach (var demo in (Demo[])Enum.GetValues<Demo>())
+        foreach (var screen in (ScreenName[])Enum.GetValues<ScreenName>())
         {
+            if(screen == ScreenName.MainMenu)
+            {
+                continue;
+            }
+
             DemoButton runtime = new DemoButton();
             runtime.NineSlice.SourceFile = buttonTexture;
             Button button = runtime.FormsControl;
-            button.Text = demo.ToString();
+            button.Text = screen.ToString();
             button.Click += (_, _) =>
             {
-                LoadDemo(demo);
+                Game.LoadScreen(screen);
             };
             _menu.Children.Add(button.Visual);
         };
-    }
 
-    private void LoadDemo(Demo demo)
-    {
-        GameScreen screen = demo switch
+        DemoButton exitRuntime = new DemoButton();
+        exitRuntime.NineSlice.SourceFile = buttonTexture;
+        Button exitButton = exitRuntime.FormsControl;
+        exitButton.Text = "Exit";
+        exitButton.Click += (_, _) =>
         {
-            //Demo.Animation => new AnimationsDemo(Game),
-            //Demo.Batching => new BatchingDemo(Game),
-            //Demo.BitmapFonts => new BitmapFontsDemo(Game),
-            //Demo.Camera => new CameraDemo(Game),
-            Demo.InputListener => new InputListenersScreen(Game),
-            Demo.Particles => new ParticlesScreen(Game),
-            //Demo.Shapes => new ShapesDemo(Game),
-            //Demo.TiledMaps => new TiledMapsDemo(Game),
-            //Demo.ViewportAdapter => new ViewportAdaptersDemo(Game),
-            _ => null
+            Game.Exit();
         };
-
-        if (screen is not null)
-        {
-            Game.ScreenManager.LoadScreen(screen, new FadeTransition(Game.GraphicsDevice, Color.White, 1.0f));
-        }
+        _menu.Children.Add(exitButton.Visual);
     }
-
     public override void Update(GameTime gameTime)
     {
-        FormsUtilities.Update(gameTime, _menu);
+        FormsUtilities.Update(gameTime, _root);
         SystemManagers.Default.Activity(gameTime.TotalGameTime.TotalSeconds);
     }
 

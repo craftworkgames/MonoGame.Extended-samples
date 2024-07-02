@@ -4,19 +4,16 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Graphics;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 
-namespace Tutorials.Demos
+namespace Tutorials.Screens
 {
-    public class BitmapFontsDemo : DemoBase
+    public class BitmapFontsScreen : GameScreen
     {
-        public override string Name => "Bitmap Fonts";
+        public new GameMain Game => (GameMain)base.Game;
 
-        public BitmapFontsDemo(GameMain parent)
-            : base(parent)
-        {
-        }
+        public BitmapFontsScreen(GameMain game) : base(game) { }
 
         private BoxingViewportAdapter _viewportAdapter;
         private Texture2D _backgroundTexture;
@@ -28,9 +25,9 @@ namespace Tutorials.Demos
         private Rectangle _clippingRectangle = new Rectangle(100, 100, 300, 300);
         private MouseState _previousMouseState;
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
-            _viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
+            _viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
 
             _backgroundTexture = Content.Load<Texture2D>("Textures/vignette");
             _bitmapFontImpact = Content.Load<BitmapFont>("Fonts/impact-32");
@@ -64,13 +61,15 @@ namespace Tutorials.Demos
             return new BitmapFont("monospaced", 32, 16, fontRegions);
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             var keyboardState = Keyboard.GetState();
             var mouseState = Mouse.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                Game.LoadScreen(ScreenName.MainMenu);
+            }
 
             var dx = mouseState.X - _previousMouseState.X;
             var dy = mouseState.Y - _previousMouseState.Y;
@@ -88,13 +87,10 @@ namespace Tutorials.Demos
             }
 
             _previousMouseState = mouseState;
-            base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
             _spriteBatch.Begin(
                 samplerState: SamplerState.LinearClamp,
                 blendState: BlendState.AlphaBlend,
@@ -147,8 +143,6 @@ namespace Tutorials.Demos
             _spriteBatch.DrawString(_bitmapFontMonospaced, "Hello Monospaced Fonts!", new Vector2(100, 400), Color.White);
 
             _spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }
