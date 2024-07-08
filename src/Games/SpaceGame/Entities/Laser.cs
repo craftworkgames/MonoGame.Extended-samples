@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace SpaceGame.Entities
 {
@@ -26,7 +25,7 @@ namespace SpaceGame.Entities
 
         public Vector2 Velocity { get; set; }
 
-        public Laser(TextureRegion2D textureRegion, Vector2 velocity)
+        public Laser(Texture2DRegion textureRegion, Vector2 velocity)
         {
             _timeToLive = 1.0f;
             _sprite = new Sprite(textureRegion);

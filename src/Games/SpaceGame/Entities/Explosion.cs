@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended;
-using MonoGame.Extended.Animations;
-using MonoGame.Extended.Sprites;
-
-namespace SpaceGame.Entities
+﻿namespace SpaceGame.Entities
 {
     //public class Explosion : Entity
     //{

@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace SpaceGame.Entities
 {
@@ -36,7 +35,7 @@ namespace SpaceGame.Entities
         public int Size { get; private set; }
         public Vector2 Velocity { get; set; }
 
-        public Meteor(TextureRegion2D textureRegion, Vector2 position, Vector2 velocity, float rotationSpeed, int size)
+        public Meteor(Texture2DRegion textureRegion, Vector2 position, Vector2 velocity, float rotationSpeed, int size)
         {
             _sprite = new Sprite(textureRegion);
             BoundingCircle = new CircleF(_transform.Position, _radius * size);

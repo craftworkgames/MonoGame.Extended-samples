@@ -2,8 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace SpaceGame.Entities
 {
@@ -41,7 +40,7 @@ namespace SpaceGame.Entities
 
         public Vector2 Velocity { get; set; }
 
-        public Spaceship(TextureRegion2D textureRegion, IBulletFactory bulletFactory)
+        public Spaceship(Texture2DRegion textureRegion, IBulletFactory bulletFactory)
         {
             _bulletFactory = bulletFactory;
             _sprite = new Sprite(textureRegion);

@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
 using Platformer.Collisions;
 using World = Platformer.Collisions.World;
 
@@ -36,7 +36,7 @@ namespace Platformer.Systems
             var body = _bodyMapper.Get(entityId);
             _world.RemoveBody(body);
         }
-        
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

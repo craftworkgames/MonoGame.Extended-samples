@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.ViewportAdapters;
 using SpaceGame.Entities;
 
@@ -61,7 +61,7 @@ namespace SpaceGame
             _backgroundTexture = Content.Load<Texture2D>("black");
 
             var bulletTexture = Content.Load<Texture2D>("laserBlue03");
-            var bulletRegion = new TextureRegion2D(bulletTexture);
+            var bulletRegion = new Texture2DRegion(bulletTexture);
             _bulletFactory = new BulletFactory(_entityManager, bulletRegion);
 
             SpawnPlayer(_bulletFactory);
@@ -75,7 +75,7 @@ namespace SpaceGame
         private void SpawnPlayer(IBulletFactory bulletFactory)
         {
             var spaceshipTexture = Content.Load<Texture2D>("playerShip1_blue");
-            var spaceshipRegion = new TextureRegion2D(spaceshipTexture);
+            var spaceshipRegion = new Texture2DRegion(spaceshipTexture);
             _player = _entityManager.AddEntity(new Spaceship(spaceshipRegion, bulletFactory));
         }
 
@@ -103,10 +103,10 @@ namespace SpaceGame
                     _player.Accelerate(-acceleration);
 
                 if (keyboardState.IsKeyDown(Keys.A) || keyboardState.IsKeyDown(Keys.Left))
-                    _player.Rotation += deltaTime*3f;
+                    _player.Rotation += deltaTime * 3f;
 
                 if (keyboardState.IsKeyDown(Keys.D) || keyboardState.IsKeyDown(Keys.Right))
-                    _player.Rotation -= deltaTime*3f;
+                    _player.Rotation -= deltaTime * 3f;
 
                 if (keyboardState.IsKeyDown(Keys.Space) || mouseState.LeftButton == ButtonState.Pressed)
                     _player.Fire();

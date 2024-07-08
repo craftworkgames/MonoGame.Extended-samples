@@ -38,9 +38,8 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
 using StarWarrior.Components;
 
 namespace StarWarrior.Systems
@@ -96,10 +95,10 @@ namespace StarWarrior.Systems
             if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
                 direction += Vector2.UnitX;
 
-            if (keyboard.IsKeyDown(Keys.K) && !_lastState.IsKeyDown(Keys.K))
-            {
-                BitmapFont.UseKernings = !BitmapFont.UseKernings;
-            }
+            //if (keyboard.IsKeyDown(Keys.K) && !_lastState.IsKeyDown(Keys.K))
+            //{
+            //    BitmapFont.UseKernings = !BitmapFont.UseKernings;
+            //}
 
             var isMoving = direction != Vector2.Zero;
             if (isMoving)
