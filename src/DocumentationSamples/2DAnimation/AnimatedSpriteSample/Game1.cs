@@ -39,10 +39,10 @@ public class Game1 : Game
             {
                 _adventurer.SetAnimation("attack").OnAnimationEvent += (sender, trigger) =>
                 {
-                    //if (trigger == AnimationEventTrigger.AnimationCompleted)
-                    //{
-                    //    _adventurer.SetAnimation("idle");
-                    //}
+                    if (trigger == AnimationEventTrigger.AnimationCompleted)
+                    {
+                        _adventurer.SetAnimation("idle");
+                    }
                 };
             }
         };
