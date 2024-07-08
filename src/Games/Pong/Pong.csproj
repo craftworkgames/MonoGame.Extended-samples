@@ -7,15 +7,16 @@
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
   </PropertyGroup>
-  <ItemGroup>
+    <PropertyGroup>
+        <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
+    </PropertyGroup>
+    <ItemGroup>
     <MonoGameContentReference Include="**\*.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Extended" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Gui" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.9.0-prerelease.4" />
+      <PackageReference Include="MonoGame.Extended" Version="4.0.0-prerelease.10" />
+      <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.0-prerelease.10" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
   </ItemGroup>
 </Project>

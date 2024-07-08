@@ -40,8 +40,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
 using StarWarrior.Components;
 
 namespace StarWarrior.Systems

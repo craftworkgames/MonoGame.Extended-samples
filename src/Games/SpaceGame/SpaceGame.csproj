@@ -10,13 +10,15 @@
     <ItemGroup>
         <MonoGameContentReference Include="**\*.mgcb" />
     </ItemGroup>
+    <PropertyGroup>
+        <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
+    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Autofac" Version="5.2.0" />
         <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+        <PackageReference Include="MonoGame.Extended" Version="4.0.0-prerelease.10" />
+        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.0-prerelease.10" />
         <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended\MonoGame.Extended.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Properties\" />

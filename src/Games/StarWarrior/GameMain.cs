@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Entities;
+using MonoGame.Extended.ECS;
 using StarWarrior.Components;
 using StarWarrior.Systems;
 

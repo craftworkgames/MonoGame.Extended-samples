@@ -6,7 +6,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Graphics;
-using MonoGame.Extended.Gum;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGameGum.Forms;

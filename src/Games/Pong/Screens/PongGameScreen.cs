@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Input;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Screens.Transitions;
-using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tweening;
 using Pong.GameObjects;
 
@@ -97,7 +97,7 @@ namespace Pong.Screens
                 //    //.OnSet(v => new Vector2(v.X, _bluePaddle.Position.Y))
                 //    .RepeatReverse()
                 //    .Easing(EasingFunctions.ExponentialIn);
-                    
+
                 _plopSoundEffect.Play(1.0f, _random.NextSingle(0.5f, 1.0f), -1f);
             }
 
@@ -124,7 +124,7 @@ namespace Pong.Screens
 
             _spriteBatch.Draw(_redPaddle.Sprite, _redPaddle.Position, _redPaddle.Rotation, _redPaddle.Scale);
             _spriteBatch.Draw(_bluePaddle.Sprite, _bluePaddle.Position, _bluePaddle.Rotation, _bluePaddle.Scale);
-            _spriteBatch.Draw(_ball.Sprite, _ball.Position, _ball.Rotation, _ball.Scale); 
+            _spriteBatch.Draw(_ball.Sprite, _ball.Position, _ball.Rotation, _ball.Scale);
             _spriteBatch.End();
         }
 
