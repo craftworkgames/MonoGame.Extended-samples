@@ -5,6 +5,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Graphics;
+using MonoGame.Extended.Gum;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using MonoGameGum.Forms;
@@ -16,7 +18,7 @@ namespace Tutorials.Screens;
 
 public class MainMenuScreen : GameScreen
 {
-    private ContainerRuntime _root;
+    private ContainerRuntime _menu;
     private ViewportAdapter _viewportAdapter;
     private new GameMain Game => (GameMain)base.Game;
 
@@ -27,66 +29,50 @@ public class MainMenuScreen : GameScreen
         base.LoadContent();
 
         Texture2D buttonTexture = Game.Content.Load<Texture2D>("Gui/button_rectangle_border");
+        Texture2DRegion buttonRegion = new Texture2DRegion(buttonTexture);
+        NinePatch ninePatch = buttonRegion.CreateNinePatch(6);
         _viewportAdapter = new BoxingViewportAdapter(Game.Window, GraphicsDevice, 800, 480);
 
-        _root = new ContainerRuntime()
+        _menu = new ContainerRuntime()
         {
             Width = _viewportAdapter.VirtualWidth,
-            Height = _viewportAdapter.ViewportHeight,
-            WidthUnits = Gum.DataTypes.DimensionUnitType.Absolute,
-            HeightUnits = Gum.DataTypes.DimensionUnitType.Absolute,
-        };
-        _root.AddToManagers();
-
-        ContainerRuntime _menu = new ContainerRuntime()
-        {
-            Width = -4,
-            Height = -4,
-            X = 4,
-            Y = 4,
-            WidthUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer,
-            HeightUnits = Gum.DataTypes.DimensionUnitType.RelativeToContainer,
+            Height = _viewportAdapter.VirtualHeight,
             ChildrenLayout = Gum.Managers.ChildrenLayout.AutoGridHorizontal,
-            XOrigin = RenderingLibrary.Graphics.HorizontalAlignment.Center,
-            YOrigin = RenderingLibrary.Graphics.VerticalAlignment.Center,
-            XUnits = Gum.Converters.GeneralUnitType.PixelsFromMiddle,
-            YUnits = Gum.Converters.GeneralUnitType.PixelsFromMiddle,
             AutoGridHorizontalCells = 4,
+            AutoGridVerticalCells = 3,
             WrapsChildren = true
         };
-        _root.Children.Add(_menu);
+        _menu.AddToManagers();
 
         foreach (var screen in (ScreenName[])Enum.GetValues<ScreenName>())
         {
-            if(screen == ScreenName.MainMenu)
+            if (screen == ScreenName.MainMenu)
             {
                 continue;
             }
 
-            DemoButton runtime = new DemoButton();
-            runtime.NineSlice.SourceFile = buttonTexture;
-            Button button = runtime.FormsControl;
-            button.Text = screen.ToString();
-            button.Click += (_, _) =>
+            DemoButton demoInstance = new DemoButton();
+            demoInstance.SetTexture(buttonTexture);
+            demoInstance.SetText(screen.ToString());
+            Button demoButton = demoInstance.FormsControl;
+            demoButton.Click += (_, _) =>
             {
                 Game.LoadScreen(screen);
             };
-            _menu.Children.Add(button.Visual);
+            _menu.Children.Add(demoButton.Visual);
         };
 
-        DemoButton exitRuntime = new DemoButton();
-        exitRuntime.NineSlice.SourceFile = buttonTexture;
-        Button exitButton = exitRuntime.FormsControl;
-        exitButton.Text = "Exit";
-        exitButton.Click += (_, _) =>
-        {
-            Game.Exit();
-        };
-        _menu.Children.Add(exitButton.Visual);
+        DemoButton closeInstance = new DemoButton();
+        closeInstance.SetTexture(buttonTexture);
+        closeInstance.SetText("Close");
+        closeInstance.SetHighlightedTextColor(Color.Orange);
+        Button closeButton = closeInstance.FormsControl;
+        closeButton.Click += (_, _) => { Game.Exit(); };
+        _menu.Children.Add(closeButton.Visual);
     }
     public override void Update(GameTime gameTime)
     {
-        FormsUtilities.Update(gameTime, _root);
+        FormsUtilities.Update(gameTime, _menu);
         SystemManagers.Default.Activity(gameTime.TotalGameTime.TotalSeconds);
     }
 

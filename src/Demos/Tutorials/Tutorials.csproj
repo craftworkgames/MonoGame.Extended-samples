@@ -1,50 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
-    <StartupObject />
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <TieredCompilation>false</TieredCompilation>
-  </PropertyGroup>
-  <ItemGroup>
-    <MonoGameContentReference Include="**\*.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Content\Animations\motw.sf" />
-    <None Remove="Content\Animations\motw.spritesheet" />
-    <None Remove="Content\Animations\zombie-atlas.json" />
-    <None Remove="Content\Animations\zombie.spritesheet" />
-    <None Remove="Content\Content.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Animations\motw.sf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Animations\motw.spritesheet">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Animations\zombie-atlas.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Animations\zombie.spritesheet">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Gui\button_rectangle_border.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.2.0" />
-    <PackageReference Include="Gum.MonoGame" Version="2024.7.1.1" />
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <!--<PackageReference Include="MonoGame.Extended.Gui" Version="3.9.0-prerelease.4" />-->
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended.Collisions\MonoGame.Extended.Collisions.csproj" />
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended.Graphics\MonoGame.Extended.Graphics.csproj" />
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended.Input\MonoGame.Extended.Input.csproj" />
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended.Particles\MonoGame.Extended.Particles.csproj" />
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended.Tiled\MonoGame.Extended.Tiled.csproj" />
-    <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended\MonoGame.Extended.csproj" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
+        <StartupObject />
+        <PublishReadyToRun>false</PublishReadyToRun>
+        <TieredCompilation>false</TieredCompilation>
+    </PropertyGroup>
+    <ItemGroup>
+        <MonoGameContentReference Include="**\*.mgcb" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Content\Animations\motw.sf" />
+        <None Remove="Content\Animations\motw.spritesheet" />
+        <None Remove="Content\Animations\zombie-atlas.json" />
+        <None Remove="Content\Animations\zombie.spritesheet" />
+        <None Remove="Content\Content.mgcb" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="Content\Animations\motw.sf">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Content\Animations\motw.spritesheet">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Content\Animations\zombie-atlas.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Content\Animations\zombie.spritesheet">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="Content\Gui\button_rectangle_border.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="5.2.0" />
+        <PackageReference Include="Gum.MonoGame" Version="2024.7.1.1" />
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+        <!--<PackageReference Include="MonoGame.Extended.Gui" Version="3.9.0-prerelease.4" />-->
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\MonoGame.Extended\source\MonoGame.Extended\MonoGame.Extended.csproj" />
+    </ItemGroup>
 </Project>
