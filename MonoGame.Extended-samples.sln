@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocumentationSamples", "Doc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteSheetSample", "src\DocumentationSamples\SpriteSheetSample\SpriteSheetSample.csproj", "{3D99AA56-ADB3-4299-AD19-2512E8F08D57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimatedSpriteSample", "src\DocumentationSamples\AnimatedSpriteSample\AnimatedSpriteSample.csproj", "{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{3D99AA56-ADB3-4299-AD19-2512E8F08D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D99AA56-ADB3-4299-AD19-2512E8F08D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D99AA56-ADB3-4299-AD19-2512E8F08D57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{AAF8DE98-857C-4AB4-8B44-51EC81CF7DF8} = {73DF77B9-2227-4C31-9FA2-350EF2B4E011}
 		{79C9AC92-A82F-4150-912D-51022992FB05} = {73DF77B9-2227-4C31-9FA2-350EF2B4E011}
 		{3D99AA56-ADB3-4299-AD19-2512E8F08D57} = {5993EF4F-31DC-4920-8795-716D27633844}
+		{9DEDF48C-DB9D-4DF7-ADE3-CB7286244957} = {5993EF4F-31DC-4920-8795-716D27633844}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {814BEBFB-DA17-4C73-A47F-2AE2164B990F}
