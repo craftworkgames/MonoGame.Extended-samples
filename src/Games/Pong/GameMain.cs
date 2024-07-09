@@ -41,6 +41,7 @@ namespace Pong
         {
             KeyboardExtended.Refresh();
             MouseExtended.Refresh();
+            base.Update(gameTime);
         }
     }
 }
