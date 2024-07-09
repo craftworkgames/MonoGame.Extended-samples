@@ -14,6 +14,12 @@
         <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
     </PropertyGroup>
     <ItemGroup>
+      <Compile Remove="Properties\**" />
+      <EmbeddedResource Remove="Properties\**" />
+      <MonoGameContentReference Remove="Properties\**" />
+      <None Remove="Properties\**" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="Autofac" Version="5.2.0" />
         <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
         <PackageReference Include="MonoGame.Extended" Version="4.0.0-prerelease.10" />
