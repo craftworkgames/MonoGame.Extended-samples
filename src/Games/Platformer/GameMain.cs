@@ -74,8 +74,8 @@ namespace Platformer
         {
             // TODO: Using global shared input state is really bad!
 
-            KeyboardExtended.Refresh();
-            MouseExtended.Refresh();
+            KeyboardExtended.Update();
+            MouseExtended.Update();
 
             //var keyboardState = KeyboardExtended.GetState();
 

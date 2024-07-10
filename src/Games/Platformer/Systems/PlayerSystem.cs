@@ -43,10 +43,10 @@ namespace Platformer.Systems
 
             if (player.CanJump)
             {
-                if (keyboardState.IsKeyPressed(Keys.Up))
+                if (keyboardState.WasKeyPressed(Keys.Up))
                     body.Velocity.Y -= 550 + Math.Abs(body.Velocity.X) * 0.4f;
 
-                if (keyboardState.IsKeyPressed(Keys.Z))
+                if (keyboardState.WasKeyPressed(Keys.Z))
                 {
                     body.Velocity.Y -= 550 + Math.Abs(body.Velocity.X) * 0.4f;
                     player.State = player.State == State.Idle ? State.Punching : State.Kicking;

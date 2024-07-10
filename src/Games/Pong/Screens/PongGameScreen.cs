@@ -78,7 +78,7 @@ namespace Pong.Screens
             var mouseState = MouseExtended.GetState();
             var keyboardState = KeyboardExtended.GetState();
 
-            if (keyboardState.IsKeyReleased(Keys.Escape))
+            if (keyboardState.WasKeyReleased(Keys.Escape))
                 ScreenManager.LoadScreen(new TitleScreen(Game), new ExpandTransition(GraphicsDevice, Color.Black));
 
             MovePaddlePlayer(mouseState);

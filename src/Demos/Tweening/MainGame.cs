@@ -78,8 +78,8 @@ namespace Tweening
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardExtended.Refresh();
-            MouseExtended.Refresh();
+            KeyboardExtended.Update();
+            MouseExtended.Update();
 
             var keyboardState = KeyboardExtended.GetState();
             var mouseState = MouseExtended.GetState();
@@ -88,10 +88,10 @@ namespace Tweening
             if (keyboardState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (keyboardState.IsKeyReleased(Keys.Space))
+            if (keyboardState.WasKeyReleased(Keys.Space))
                 _tweener.CancelAll();
 
-            if (keyboardState.IsKeyReleased(Keys.Tab))
+            if (keyboardState.WasKeyReleased(Keys.Tab))
                 _tweener.CancelAndCompleteAll();
 
             if (mouseState.IsButtonDown(MouseButton.Left))

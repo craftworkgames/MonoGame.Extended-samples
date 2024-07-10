@@ -30,7 +30,7 @@ namespace Pong.Screens
             var mouseState = MouseExtended.GetState();
             var keyboardState = KeyboardExtended.GetState();
 
-            if (keyboardState.IsKeyReleased(Keys.Escape))
+            if (keyboardState.WasKeyReleased(Keys.Escape))
                 Game.Exit();
 
             if (mouseState.LeftButton == ButtonState.Pressed || keyboardState.WasAnyKeyJustDown())
