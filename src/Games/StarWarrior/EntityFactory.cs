@@ -1,6 +1,6 @@
 ﻿using System;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
+using MonoGame.Extended.ECS;
 using StarWarrior.Components;
 
 namespace StarWarrior

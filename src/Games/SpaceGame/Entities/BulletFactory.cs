@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace SpaceGame.Entities
 {
@@ -10,10 +10,10 @@ namespace SpaceGame.Entities
 
     public class BulletFactory : IBulletFactory
     {
-        private readonly TextureRegion2D _bulletRegion;
+        private readonly Texture2DRegion _bulletRegion;
         private readonly IEntityManager _entityManager;
 
-        public BulletFactory(IEntityManager entityManager, TextureRegion2D bulletRegion)
+        public BulletFactory(IEntityManager entityManager, Texture2DRegion bulletRegion)
         {
             _entityManager = entityManager;
             _bulletRegion = bulletRegion;

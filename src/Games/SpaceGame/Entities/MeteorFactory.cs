@@ -4,48 +4,48 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Graphics;
 
 namespace SpaceGame.Entities
 {
     public class MeteorFactory
     {
         private readonly EntityManager _entityManager;
-        private readonly Dictionary<int, TextureRegion2D[]> _meteorRegions;
+        private readonly Dictionary<int, Texture2DRegion[]> _meteorRegions;
         private readonly Random _random = new Random();
 
         public MeteorFactory(EntityManager entityManager, ContentManager contentManager)
         {
             _entityManager = entityManager;
 
-            _meteorRegions = new Dictionary<int, TextureRegion2D[]>
+            _meteorRegions = new Dictionary<int, Texture2DRegion[]>
             {
                 {4, new[]
                 {
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_big1")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_big2")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_big3")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_big4"))
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_big1")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_big2")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_big3")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_big4"))
                 }},
                 {3, new[]
                 {
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_med1")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_med3"))
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_med1")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_med3"))
                 }},
                 {2, new[]
                 {
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_small1")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_small2"))
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_small1")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_small2"))
                 }},
                 {1, new[]
                 {
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_tiny1")),
-                    new TextureRegion2D(contentManager.Load<Texture2D>("meteorBrown_tiny2"))
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_tiny1")),
+                    new Texture2DRegion(contentManager.Load<Texture2D>("meteorBrown_tiny2"))
                 }}
             };
         }
 
-        private TextureRegion2D GetMeteorRegion(int size)
+        private Texture2DRegion GetMeteorRegion(int size)
         {
             var regions = _meteorRegions[size];
             var index = _random.Next(0, regions.Length);
@@ -72,7 +72,7 @@ namespace SpaceGame.Entities
             }
         }
 
-        public void SpawnNewMeteor(Point2 playerPosition)
+        public void SpawnNewMeteor(Vector2 playerPosition)
         {
             var rotationSpeed = _random.Next(-10, 10) * 0.1f;
             var spawnCircle = new CircleF(playerPosition, 630);

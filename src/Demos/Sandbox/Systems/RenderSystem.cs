@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
 using Sandbox.Components;
 
 namespace Sandbox.Systems
@@ -38,7 +38,7 @@ namespace Sandbox.Systems
                 var transform = _transformMapper.Get(entity);
                 var raindrop = _raindropMapper.Get(entity);
 
-                _spriteBatch.FillRectangle(transform.Position, new Size2(raindrop.Size, raindrop.Size), Color.LightBlue);
+                _spriteBatch.FillRectangle(transform.Position, new Vector2(raindrop.Size, raindrop.Size), Color.LightBlue);
             }
 
             _spriteBatch.End();

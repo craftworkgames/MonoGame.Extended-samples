@@ -1,24 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.BitmapFonts;
-using MonoGame.Extended.Gui;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using MonoGameGum.Forms;
+using MonoGameGum.Forms.Controls;
+using RenderingLibrary;
 using Tutorials.Demos;
+using Tutorials.Screens;
 
 namespace Tutorials
 {
     public class GameMain : Game
     {
-        // ReSharper disable once NotAccessedField.Local
         private readonly GraphicsDeviceManager _graphicsDeviceManager;
         private readonly FramesPerSecondCounter _fpsCounter = new FramesPerSecondCounter();
-        private readonly Dictionary<string, DemoBase> _demos;
-        private DemoBase _currentDemo;
+        private readonly Dictionary<ScreenName, GameScreen> _screens = new Dictionary<ScreenName, GameScreen>();
 
-        private GuiSystem _guiSystem;
+        private readonly ScreenManager _screenManager;
+        private ScreenName _currentScreen;
 
         public ViewportAdapter ViewportAdapter { get; private set; }
 
@@ -30,118 +30,68 @@ namespace Tutorials
                 SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight
             };
 
+            _graphicsDeviceManager.PreferredBackBufferWidth = 800;
+            _graphicsDeviceManager.PreferredBackBufferHeight = 480;
+            _graphicsDeviceManager.ApplyChanges();
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
 
-            _demos = new DemoBase[]
-            {
-                new ShapesDemo(this),
-                new ViewportAdaptersDemo(this),
-                new CollisionDemo(this),
-                new TiledMapsDemo(this),
-                new AnimationsDemo(this),
-                new SpritesDemo(this),
-                new BatchingDemo(this),
-                new InputListenersDemo(this),
-                new ParticlesDemo(this),
-                new CameraDemo(this),
-                new BitmapFontsDemo(this)
-            }.ToDictionary(d => d.Name);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            foreach (var demo in _demos.Values)
-                demo.Dispose();
-
-            base.Dispose(disposing);
+            _screenManager = new ScreenManager();
+            Components.Add(_screenManager);
         }
 
         protected override void Initialize()
         {
-            base.Initialize();
+            //  Initialize GUM UI System
+            SystemManagers.Default = new SystemManagers();
+            SystemManagers.Default.Initialize(_graphicsDeviceManager.GraphicsDevice, fullInstantiation: true);
+            FormsUtilities.InitializeDefaults();
+            FrameworkElement.DefaultFormsComponents[typeof(Button)] = typeof(DemoButton);
 
-            // TODO: Allow switching to full-screen mode from the UI
-            //if (_isFullScreen)
-            //{
-            //    _graphicsDeviceManager.IsFullScreen = true;
-            //    _graphicsDeviceManager.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            //    _graphicsDeviceManager.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            //    _graphicsDeviceManager.ApplyChanges();
-            //}
+            //  Initialize demos screens
+            _screens.Add(ScreenName.Animation, null);
+            _screens.Add(ScreenName.Batching, new BatchingScreen(this));
+            _screens.Add(ScreenName.BitmapFonts, new BitmapFontsScreen(this));
+            _screens.Add(ScreenName.Camera, new CameraScreen(this));
+            _screens.Add(ScreenName.Collision, new CollisionScreen(this));
+            _screens.Add(ScreenName.InputListener, new InputListenersScreen(this));
+            _screens.Add(ScreenName.MainMenu, new MainMenuScreen(this));
+            _screens.Add(ScreenName.Particles, new ParticlesScreen(this));
+            _screens.Add(ScreenName.Shapes, new ShapesScreen(this));
+            _screens.Add(ScreenName.Sprites, new SpritesScreen(this));
+            _screens.Add(ScreenName.TiledMaps, new TiledMapsScreen(this));
+            _screens.Add(ScreenName.ViewportAdapter, new ViewportAdaptersScreen(this));
+
+            base.Initialize();
         }
 
         protected override void LoadContent()
         {
             ViewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-
-            //var skin = GuiSkin.FromFile(Content, @"Raw/adventure-gui-skin.json");
-            var guiRenderer = new GuiSpriteBatchRenderer(GraphicsDevice, ViewportAdapter.GetScaleMatrix);
-
-            var font = Content.Load<BitmapFont>("small-font");
-            BitmapFont.UseKernings = false;
-            Skin.CreateDefault(font);
-            _selectDemoScreen = new SelectDemoScreen(_demos, LoadDemo, Exit);
-
-            _guiSystem = new GuiSystem(ViewportAdapter, guiRenderer)
-            {
-                ActiveScreen = _selectDemoScreen,
-            };
+            LoadScreen(ScreenName.MainMenu);
         }
 
-        private void LoadDemo(string name)
+        public void LoadScreen(ScreenName screen)
         {
             IsMouseVisible = true;
-            _currentDemo?.Unload();
-            _currentDemo?.Dispose();
-            _currentDemo = _demos[name];
-            _currentDemo.Load();
+            _screenManager.LoadScreen(_screens[screen]);
+            _currentScreen = screen;
         }
-
-        private KeyboardState _previousKeyboardState;
-        private SelectDemoScreen _selectDemoScreen;
 
         protected override void Update(GameTime gameTime)
         {
-            var keyboardState = Keyboard.GetState();
-
-            if (keyboardState.IsKeyDown(Keys.Escape) && _previousKeyboardState.IsKeyUp(Keys.Escape))
-                Back();
-
             _fpsCounter.Update(gameTime);
-            _guiSystem.Update(gameTime);
-            _currentDemo?.OnUpdate(gameTime);
-
-            _previousKeyboardState = keyboardState;
             base.Update(gameTime);
-        }
-
-        public void Back()
-        {
-            if (_selectDemoScreen.IsVisible)
-                Exit();
-
-            IsMouseVisible = true;
-            _currentDemo?.Unload();
-            _currentDemo?.Dispose();
-            _currentDemo = null;
-            _selectDemoScreen.IsVisible = true;
-            _guiSystem.ActiveScreen = _selectDemoScreen;
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-
             _fpsCounter.Draw(gameTime);
-            Window.Title = $"{_currentDemo?.Name} {_fpsCounter.FramesPerSecond}";
-
+            Window.Title = $"{_currentScreen} {_fpsCounter.FramesPerSecond}";
             base.Draw(gameTime);
-
-            _currentDemo?.OnDraw(gameTime);
-
-            _guiSystem.Draw(gameTime);
         }
     }
 }

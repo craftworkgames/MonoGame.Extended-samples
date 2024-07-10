@@ -39,8 +39,9 @@ namespace Pong
 
         protected override void Update(GameTime gameTime)
         {
-            KeyboardExtended.Refresh();
-            MouseExtended.Refresh();
+            KeyboardExtended.Update();
+            MouseExtended.Update();
+            base.Update(gameTime);
         }
     }
 }

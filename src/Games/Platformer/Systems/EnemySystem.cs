@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
 using Platformer.Collisions;
 using Platformer.Components;
 
@@ -9,7 +9,7 @@ namespace Platformer.Systems
 {
     public class EnemySystem : EntityProcessingSystem
     {
-        public EnemySystem() 
+        public EnemySystem()
             : base(Aspect.All(typeof(Body), typeof(Enemy)))
         {
         }

@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
+using MonoGame.Extended.Animations;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
+using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Input;
-using MonoGame.Extended.Sprites;
 using Platformer.Collisions;
 using Platformer.Components;
 
@@ -19,7 +20,7 @@ namespace Platformer.Systems
         private ComponentMapper<Transform2> _transformMapper;
         private ComponentMapper<Body> _bodyMapper;
 
-        public PlayerSystem() 
+        public PlayerSystem()
             : base(Aspect.All(typeof(Body), typeof(Player), typeof(Transform2), typeof(AnimatedSprite)))
         {
         }
@@ -42,10 +43,10 @@ namespace Platformer.Systems
 
             if (player.CanJump)
             {
-                if (keyboardState.IsKeyPressed(Keys.Up))
+                if (keyboardState.WasKeyPressed(Keys.Up))
                     body.Velocity.Y -= 550 + Math.Abs(body.Velocity.X) * 0.4f;
 
-                if (keyboardState.IsKeyPressed(Keys.Z))
+                if (keyboardState.WasKeyPressed(Keys.Z))
                 {
                     body.Velocity.Y -= 550 + Math.Abs(body.Velocity.X) * 0.4f;
                     player.State = player.State == State.Idle ? State.Punching : State.Kicking;
@@ -85,26 +86,45 @@ namespace Platformer.Systems
             switch (player.State)
             {
                 case State.Jumping:
-                    sprite.Play("jump");
+                    sprite.SetAnimation("jump");
+                    //sprite.Play("jump");
                     break;
                 case State.Walking:
-                    sprite.Play("walk");
+                    sprite.SetAnimation("walk");
+                    //sprite.Play("walk");
                     sprite.Effect = player.Facing == Facing.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                     break;
                 case State.Falling:
-                    sprite.Play("fall");
+                    sprite.SetAnimation("fall");
+                    //sprite.Play("fall");
                     break;
                 case State.Idle:
-                    sprite.Play("idle");
+                    sprite.SetAnimation("idle");
+                    //sprite.Play("idle");
                     break;
                 case State.Kicking:
-                    sprite.Play("kick", () => player.State = State.Idle);
+                    sprite.SetAnimation("kick").OnAnimationEvent += (s, e) =>
+                    {
+                        if (e == AnimationEventTrigger.AnimationCompleted)
+                        {
+                            player.State = State.Idle;
+                        }
+                    };
+                    //sprite.Play("kick", () => player.State = State.Idle);
                     break;
                 case State.Punching:
-                    sprite.Play("punch", () => player.State = State.Idle);
+                    sprite.SetAnimation("punch").OnAnimationEvent += (s, e) =>
+                    {
+                        if (e == AnimationEventTrigger.AnimationCompleted)
+                        {
+                            player.State = State.Idle;
+                        }
+                    };
+                    //sprite.Play("punch", () => player.State = State.Idle);
                     break;
                 case State.Cool:
-                    sprite.Play("cool");
+                    sprite.SetAnimation("cool");
+                    //sprite.Play("cool");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

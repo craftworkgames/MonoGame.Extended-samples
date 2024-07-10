@@ -1,21 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <TieredCompilation>false</TieredCompilation>
-  </PropertyGroup>
-  <ItemGroup>
-    <MonoGameContentReference Include="**\*.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
-    <PackageReference Include="MonoGame.Extended" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Input" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Extended.Tweening" Version="3.9.0-prerelease.4" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
-  </ItemGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ApplicationIcon />
+        <StartupObject />
+        <PublishReadyToRun>false</PublishReadyToRun>
+        <TieredCompilation>false</TieredCompilation>
+    </PropertyGroup>
+    <ItemGroup>
+        <MonoGameContentReference Include="**\*.mgcb" />
+    </ItemGroup>
+    <PropertyGroup>
+        <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+        <PackageReference Include="MonoGame.Extended" Version="4.0.0" />
+        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.0" />
+        <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303" />
+    </ItemGroup>
 </Project>

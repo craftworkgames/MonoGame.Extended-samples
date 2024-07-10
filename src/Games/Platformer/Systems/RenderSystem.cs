@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using MonoGame.Extended.Animations;
-using MonoGame.Extended.Entities;
-using MonoGame.Extended.Entities.Systems;
-using MonoGame.Extended.Sprites;
+using MonoGame.Extended.ECS;
+using MonoGame.Extended.ECS.Systems;
+using MonoGame.Extended.Graphics;
 
 namespace Platformer.Systems
 {
@@ -41,8 +40,8 @@ namespace Platformer.Systems
                     : _spriteMapper.Get(entity);
                 var transform = _transforMapper.Get(entity);
 
-                if(sprite is AnimatedSprite animatedSprite)
-                    animatedSprite.Update(gameTime.GetElapsedSeconds());
+                if (sprite is AnimatedSprite animatedSprite)
+                    animatedSprite.Update(gameTime);
 
                 _spriteBatch.Draw(sprite, transform);
 
