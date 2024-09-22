@@ -7,6 +7,8 @@ using MonoGame.Extended;
 using MonoGame.Extended.Collisions;
 using MonoGame.Extended.Graphics;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.BitmapFonts;
+using System.Text;
 
 namespace Tutorials.Screens
 {
@@ -18,6 +20,7 @@ namespace Tutorials.Screens
         private Texture2D _spikyBallTexture;
         private Texture2D _blankTexture;
         private DemoBall _controllableBall;
+        private BitmapFont _bitmapFont;
 
         public new GameMain Game => (GameMain)base.Game;
 
@@ -28,6 +31,7 @@ namespace Tutorials.Screens
             _collisionComponent = new CollisionComponent(new RectangleF(-10000, -5000, 20000, 10000));
             _actors = new List<DemoActor>();
 
+            _bitmapFont = Content.Load<BitmapFont>("Fonts/montserrat-32");
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             var spikeyBallTexture = Content.Load<Texture2D>("Textures/spike_ball");
@@ -121,6 +125,10 @@ namespace Tutorials.Screens
             {
                 actor.Draw(_spriteBatch);
             }
+            _spriteBatch.End();
+
+            _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
+            _spriteBatch.DrawString(_bitmapFont, "Use W,A,S,D to move.", new Vector2(5, 5), Color.DarkBlue);
             _spriteBatch.End();
         }
     }
