@@ -66,16 +66,19 @@ namespace Tutorials.Demos
             {
                 Game.LoadScreen(ScreenName.MainMenu);
             }
+            else
+            {
+                _transform.Rotation += deltaTime;
 
-            _transform.Rotation += deltaTime;
+                // After Game.LoadScreen is called, objects are disposed and we don't want to get an error
+                _particleEffect.Update(deltaTime);
 
-            _particleEffect.Update(deltaTime);
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                    _particleEffect.Trigger(new Vector2(p.X, p.Y));
 
-            if (mouseState.LeftButton == ButtonState.Pressed)
-                _particleEffect.Trigger(new Vector2(p.X, p.Y));
-
-            //_particleEffect.Position = new Vector2(400, 240);
-            //_particleEffect.Trigger(new Vector2(400, 240));
+                //_particleEffect.Position = new Vector2(400, 240);
+                //_particleEffect.Trigger(new Vector2(400, 240));
+            }
         }
 
         public override void Draw(GameTime gameTime)
