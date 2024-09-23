@@ -20,7 +20,15 @@ namespace SpaceGame.Entities
 
         public CircleF BoundingCircle;
 
-        public Vector2 Direction => Vector2.UnitX.Rotate(Rotation);
+        public Vector2 Direction
+        {
+            get
+            {
+                Vector2 dir = Vector2.UnitX;
+                dir.Rotate(Rotation);
+                return dir;
+            }
+        }
 
         public Vector2 Position
         {
@@ -91,8 +99,15 @@ namespace SpaceGame.Entities
             }
 
             var angle = Rotation + MathHelper.ToRadians(90);
-            var muzzle1Position = Position + new Vector2(14, 0).Rotate(angle);
-            var muzzle2Position = Position + new Vector2(-14, 0).Rotate(angle);
+
+            Vector2 muzzle1Position = new Vector2(14, 0);
+            muzzle1Position.Rotate(angle);
+            muzzle1Position += Position;
+
+            Vector2 muzzle2Position = new Vector2(-14, 0);
+            muzzle2Position.Rotate(angle);
+            muzzle2Position += Position;
+
             _bulletFactory.Create(muzzle1Position, Direction, angle, 550f);
             _bulletFactory.Create(muzzle2Position, Direction, angle, 550f);
             _fireCooldown = 0.2f;
