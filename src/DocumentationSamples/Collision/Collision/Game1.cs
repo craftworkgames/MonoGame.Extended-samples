@@ -19,7 +19,6 @@ namespace Collision
         private SpriteBatch _spriteBatch;
 
         // Monogame.Extended.Collisions example related
-        public readonly Random Random = new Random(Guid.NewGuid().GetHashCode());
         private readonly List<IEntity> _entities = new List<IEntity>();
         private readonly CollisionComponent _collisionComponent;
         const int MapWidth = 500;
@@ -42,15 +41,15 @@ namespace Collision
             // Create some objects to use in the collision demo
             for (var i = 0; i < 50; i++)
             {
-                var size = Random.Next(20, 40);
-                var position = new Vector2(Random.Next(-MapWidth, MapWidth * 2), Random.Next(0, MapHeight));
+                var size = Random.Shared.Next(20, 40);
+                var position = new Vector2(Random.Shared.Next(-MapWidth, MapWidth * 2), Random.Shared.Next(0, MapHeight));
                 if (i % 2 == 0)
                 {
-                    _entities.Add(new BallEntity(this, new CircleF(position, size)));
+                    _entities.Add(new BallEntity(new CircleF(position, size)));
                 }
                 else
                 {
-                    _entities.Add(new CubeEntity(this, new RectangleF(position, new SizeF(size, size))));
+                    _entities.Add(new CubeEntity(new RectangleF(position, new SizeF(size, size))));
                 }
             }
 

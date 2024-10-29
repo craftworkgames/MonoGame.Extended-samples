@@ -16,13 +16,11 @@ namespace Collision
 {
     public class CubeEntity : IEntity
     {
-        private readonly Game1 _game;
         public Vector2 Velocity;
         public IShapeF Bounds { get; }
 
-        public CubeEntity(Game1 game, RectangleF rectangleF)
+        public CubeEntity(RectangleF rectangleF)
         {
-            _game = game;
             Bounds = rectangleF;
             RandomizeVelocity();
         }
@@ -46,8 +44,8 @@ namespace Collision
 
         private void RandomizeVelocity()
         {
-            Velocity.X = _game.Random.Next(-1, 2);
-            Velocity.Y = _game.Random.Next(-1, 2);
+            Velocity.X = Random.Shared.Next(-1, 2);
+            Velocity.Y = Random.Shared.Next(-1, 2);
         }
     }
 }
