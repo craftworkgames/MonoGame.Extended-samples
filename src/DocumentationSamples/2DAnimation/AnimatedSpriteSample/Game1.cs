@@ -109,7 +109,7 @@ public class Game1 : Game
 
         //  Draw the animated sprite
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        _spriteBatch.Draw(_adventurer, Vector2.Zero, 0.0f, new Vector2(3, 3));
+        _spriteBatch.Draw(_adventurer, new Vector2(50, 50), 0.0f, new Vector2(3, 3));
         _spriteBatch.End();
 
         base.Draw(gameTime);
