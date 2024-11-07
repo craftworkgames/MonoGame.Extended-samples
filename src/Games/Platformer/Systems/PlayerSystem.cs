@@ -88,23 +88,19 @@ namespace Platformer.Systems
                 case State.Jumping:
                     if (sprite.CurrentAnimation != "jump")
                         sprite.SetAnimation("jump");
-                    //sprite.Play("jump");
                     break;
                 case State.Walking:
                     if (sprite.CurrentAnimation != "walk")
                         sprite.SetAnimation("walk");
-                    //sprite.Play("walk");
                     sprite.Effect = player.Facing == Facing.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                     break;
                 case State.Falling:
                     if (sprite.CurrentAnimation != "fall")
                         sprite.SetAnimation("fall");
-                    //sprite.Play("fall");
                     break;
                 case State.Idle:
                     if (sprite.CurrentAnimation != "idle")
                         sprite.SetAnimation("idle");
-                    //sprite.Play("idle");
                     break;
                 case State.Kicking:
                     if (sprite.CurrentAnimation != "kick")
@@ -115,7 +111,6 @@ namespace Platformer.Systems
                                 player.State = State.Idle;
                             }
                         };
-                    //sprite.Play("kick", () => player.State = State.Idle);
                     break;
                 case State.Punching:
                     if (sprite.CurrentAnimation != "punch")
@@ -126,21 +121,16 @@ namespace Platformer.Systems
                                 player.State = State.Idle;
                             }
                         };
-                    //sprite.Play("punch", () => player.State = State.Idle);
                     break;
                 case State.Cool:
                     if (sprite.CurrentAnimation != "cool")
                         sprite.SetAnimation("cool");
-                    //sprite.Play("cool");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             body.Velocity.X *= 0.7f;
-
-            // TODO: Can we remove this?
-            //transform.Position = body.Position;
         }
     }
 }
