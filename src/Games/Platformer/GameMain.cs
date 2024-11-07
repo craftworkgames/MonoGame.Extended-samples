@@ -87,6 +87,8 @@ namespace Platformer
 
             //_world.Update(gameTime);
 
+            
+
             base.Update(gameTime);
         }
 
