@@ -59,7 +59,7 @@ namespace Platformer
             AddAnimationCycle(spriteSheet, "idle", new[] { 0, 1, 2, 3, 2, 1 });
             AddAnimationCycle(spriteSheet, "walk", new[] { 6, 7, 8, 9, 10, 11 });
             AddAnimationCycle(spriteSheet, "jump", new[] { 10, 12 }, false, 1.0f);
-            entity.Attach(new AnimatedSprite(spriteSheet, "idle") { Effect = SpriteEffects.FlipHorizontally });
+            entity.Attach(new AnimatedSprite(spriteSheet, "idle"));
             entity.Attach(new Transform2(position, 0, Vector2.One * 4));
             entity.Attach(new Body { Position = position, Size = new Vector2(32, 64), BodyType = BodyType.Dynamic });
             entity.Attach(new Enemy());

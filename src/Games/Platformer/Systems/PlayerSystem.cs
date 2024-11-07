@@ -86,44 +86,51 @@ namespace Platformer.Systems
             switch (player.State)
             {
                 case State.Jumping:
-                    sprite.SetAnimation("jump");
+                    if (sprite.CurrentAnimation != "jump")
+                        sprite.SetAnimation("jump");
                     //sprite.Play("jump");
                     break;
                 case State.Walking:
-                    sprite.SetAnimation("walk");
+                    if (sprite.CurrentAnimation != "walk")
+                        sprite.SetAnimation("walk");
                     //sprite.Play("walk");
                     sprite.Effect = player.Facing == Facing.Right ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                     break;
                 case State.Falling:
-                    sprite.SetAnimation("fall");
+                    if (sprite.CurrentAnimation != "fall")
+                        sprite.SetAnimation("fall");
                     //sprite.Play("fall");
                     break;
                 case State.Idle:
-                    sprite.SetAnimation("idle");
+                    if (sprite.CurrentAnimation != "idle")
+                        sprite.SetAnimation("idle");
                     //sprite.Play("idle");
                     break;
                 case State.Kicking:
-                    sprite.SetAnimation("kick").OnAnimationEvent += (s, e) =>
-                    {
-                        if (e == AnimationEventTrigger.AnimationCompleted)
+                    if (sprite.CurrentAnimation != "kick")
+                        sprite.SetAnimation("kick").OnAnimationEvent += (s, e) =>
                         {
-                            player.State = State.Idle;
-                        }
-                    };
+                            if (e == AnimationEventTrigger.AnimationCompleted)
+                            {
+                                player.State = State.Idle;
+                            }
+                        };
                     //sprite.Play("kick", () => player.State = State.Idle);
                     break;
                 case State.Punching:
-                    sprite.SetAnimation("punch").OnAnimationEvent += (s, e) =>
-                    {
-                        if (e == AnimationEventTrigger.AnimationCompleted)
+                    if (sprite.CurrentAnimation != "punch")
+                        sprite.SetAnimation("punch").OnAnimationEvent += (s, e) =>
                         {
-                            player.State = State.Idle;
-                        }
-                    };
+                            if (e == AnimationEventTrigger.AnimationCompleted)
+                            {
+                                player.State = State.Idle;
+                            }
+                        };
                     //sprite.Play("punch", () => player.State = State.Idle);
                     break;
                 case State.Cool:
-                    sprite.SetAnimation("cool");
+                    if (sprite.CurrentAnimation != "cool")
+                        sprite.SetAnimation("cool");
                     //sprite.Play("cool");
                     break;
                 default:
