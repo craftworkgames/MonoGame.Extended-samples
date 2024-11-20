@@ -36,52 +36,116 @@
 
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using MonoGame.Extended.Collections;
+using MonoGame.Extended.ECS;
 using MonoGame.Extended.ECS.Systems;
+using StarWarrior.Components;
 
 namespace StarWarrior.Systems
 {
-    public class CollisionSystem : UpdateSystem
+    public class CollisionSystem : EntityUpdateSystem
     {
-        public override void Update(GameTime gameTime)
+        private ComponentMapper<Transform2> _transformMapper;
+        private ComponentMapper<EnemyComponent> _enemyMapper;
+        private ComponentMapper<OwnerComponent> _ownerComponent;
+        private ComponentMapper<PlayerComponent> _playerMapper;
+        private ComponentMapper<HealthComponent> _healthMapper;
+
+        private Bag<int> _enemies;
+        private Bag<int> _players;
+        private Bag<int> _bullets;
+
+        public CollisionSystem() : base(Aspect.One(typeof(HealthComponent), typeof(OwnerComponent)))
         {
-            //var bullets = EntityManager.GetEntitiesByGroup("BULLETS");
-            //var ships = EntityManager.GetEntitiesByGroup("SHIPS");
-            //if (bullets == null || ships == null)
-            //    return;
 
-            //// ReSharper disable once ForCanBeConvertedToForeach
-            //for (var shipIndex = 0; ships.Count > shipIndex; ++shipIndex)
-            //{
-            //    var ship = ships[shipIndex];
+        }
 
-            //    // ReSharper disable once ForCanBeConvertedToForeach
-            //    for (var bulletIndex = 0; bullets.Count > bulletIndex; ++bulletIndex)
-            //    {
-            //        var bullet = bullets[bulletIndex];
-            //        var bulletTransform = bullet.Get<Transform2>();
-            //        var shipTransform = ship.Get<Transform2>();
+        public override void Initialize(IComponentMapperService mapperService)
+        {
+            _transformMapper = mapperService.GetMapper<Transform2>();
+            _enemyMapper = mapperService.GetMapper<EnemyComponent>();
+            _ownerComponent = mapperService.GetMapper<OwnerComponent>();
+            _playerMapper = mapperService.GetMapper<PlayerComponent>();
+            _healthMapper = mapperService.GetMapper<HealthComponent>();
 
-            //        if (!CollisionExists(bulletTransform, shipTransform))
-            //            continue;
+            _enemies = new Bag<int>();
+            _players = new Bag<int>();
+            _bullets = new Bag<int>();
+        }
 
-            //        var bulletExplosion = EntityManager.CreateEntityFromTemplate(BulletExplosionTemplate.Name);
-            //        bulletExplosion.Get<Transform2>().Position = bulletTransform.Position;
-            //        bullet.Destroy();
+        protected override void OnEntityAdded(int entityId)
+        {
+            if (_enemyMapper.Get(entityId) != null)
+                _enemies.Add(entityId);
+            else if (_playerMapper.Get(entityId) != null)
+                _players.Add(entityId);
+            else if (_ownerComponent.Get(entityId) != null)
+                _bullets.Add(entityId);
+        }
+        protected override void OnEntityRemoved(int entityId)
+        {
+            if (_enemyMapper.Get(entityId) != null)
+                _enemies.Remove(entityId);
+            else if (_playerMapper.Get(entityId) != null)
+                _players.Remove(entityId);
+            else if (_ownerComponent.Get(entityId) != null)
+                _bullets.Remove(entityId);
+        }
 
-            //        var healthComponent = ship.Get<HealthComponent>();
-            //        healthComponent.AddDamage(4);
+        public override void Update(GameTime gameTime) 
+        {
+            if (_bullets.Count == 0 || _enemies.Count == 0)
+                return;
 
-            //        if (healthComponent.IsAlive)
-            //            continue;
+            // Check bullets against enemy ships
+            foreach (int bulletId in _bullets)
+            {
+                Transform2 bulletTransform = _transformMapper.Get(bulletId);
+                OwnerComponent bulletOwner = _ownerComponent.Get(bulletId);
 
-            //        var shipExplosion = EntityManager.CreateEntityFromTemplate(ShipExplosionTemplate.Name);
-            //        shipExplosion.Get<Transform2>().Position = shipTransform.Position;
-            //        ship.Destroy();
-            //        break;
-            //    }
-            //}
+                PlayerComponent playerComponent = null;
+                if (bulletOwner != null)
+                {
+                    playerComponent = _playerMapper.Get(bulletOwner.OwnerID);
+                }
 
+                // Player bullet, check against all enemies
+                if (playerComponent != null)
+                {
+                    foreach (int enemyId in _enemies)
+                    {
+                        Transform2 enemyTransform = _transformMapper.Get(enemyId);
+                        HealthComponent enemyHealth = _healthMapper.Get(enemyId);
+                        if (CollisionExists(bulletTransform,enemyTransform))
+                        {
+                            DestroyEntity(bulletId);
 
+                            // apply health reduction
+                            enemyHealth.AddDamage(1);
+                            if (!enemyHealth.IsAlive)
+                                DestroyEntity(enemyId);
+                        }
+                    }
+                }
+                // Enemy bullet, check against players
+                else
+                {
+                    foreach (int playerId in _players)
+                    {
+                        Transform2 playerTransform = _transformMapper.Get(playerId);
+                        HealthComponent playerHealth = _healthMapper.Get(playerId);
+                        if (CollisionExists(bulletTransform, playerTransform))
+                        {
+                            DestroyEntity(bulletId);
+
+                            // apply health reduction
+                            playerHealth.AddDamage(1);
+                            if (!playerHealth.IsAlive)
+                                DestroyEntity(playerId);
+                        }
+                    }
+                }
+            }
         }
 
         // ReSharper disable once SuggestBaseTypeForParameter

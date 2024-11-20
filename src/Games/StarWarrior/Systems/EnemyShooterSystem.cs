@@ -68,7 +68,7 @@ namespace StarWarrior.Systems
                 return;
             weapon.ShootTimerDelay -= weapon.ShootDelay;
 
-            var missile = _entityFactory.CreateMissile();
+            var missile = _entityFactory.CreateMissile(entityId);
             var missileTransform = missile.Get<Transform2>();
 
             var worldPosition = transform.WorldPosition;

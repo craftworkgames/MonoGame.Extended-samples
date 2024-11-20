@@ -38,6 +38,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.Collections;
 using MonoGame.Extended.ECS;
 using MonoGame.Extended.ECS.Systems;
 using StarWarrior.Components;
@@ -51,6 +52,8 @@ namespace StarWarrior.Systems
         private readonly Random _random = new Random();
         private ComponentMapper<EnemyComponent> _enemyComponentMapper;
 
+        private Bag<int> _enemies;
+
         public EnemySpawnSystem(GraphicsDevice graphicsDevice, EntityFactory entityFactory) : base(Aspect.One(typeof(EnemyComponent)))
         {
             _graphicsDevice = graphicsDevice;
@@ -60,12 +63,25 @@ namespace StarWarrior.Systems
         public override void Initialize(IComponentMapperService mapperService)
         {
             _enemyComponentMapper = mapperService.GetMapper<EnemyComponent>();
+            _enemies = new Bag<int>();
+        }
+
+        // Keep track of how many enemies there are
+        protected override void OnEntityAdded(int entityId)
+        {
+            if (_enemyComponentMapper.Get(entityId) != null)
+                _enemies.Add(entityId);
+        }
+        protected override void OnEntityRemoved(int entityId)
+        {
+            if (_enemyComponentMapper.Get(entityId) != null)
+                _enemies.Remove(entityId);
         }
 
         public override void Update(GameTime gameTime)
         {
             // Only allow 10 enemies
-            if (_enemyComponentMapper.Components.Count > 10)
+            if (_enemies.Count > 10)
                 return;
 
             var viewport = _graphicsDevice.Viewport;

@@ -14,13 +14,14 @@ namespace StarWarrior
         // TODO: Remove this property injection.
         public World World { get; set; }
 
-        public Entity CreateMissile()
+        public Entity CreateMissile(int ownerID)
         {
             var entity = World.CreateEntity();
             entity.Attach(new Transform2());
             entity.Attach(new SpatialFormComponent { SpatialFormFile = "Missile" });
             entity.Attach(new PhysicsComponent());
             entity.Attach(new ExpiresComponent { LifeTime = TimeSpan.FromMilliseconds(2000) });
+            entity.Attach(new OwnerComponent { OwnerID = ownerID });
             return entity;
         }
 
