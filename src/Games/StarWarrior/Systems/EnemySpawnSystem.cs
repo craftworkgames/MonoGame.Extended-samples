@@ -38,25 +38,36 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
+using MonoGame.Extended.ECS;
 using MonoGame.Extended.ECS.Systems;
 using StarWarrior.Components;
 
 namespace StarWarrior.Systems
 {
-    public class EnemySpawnSystem : UpdateSystem
+    public class EnemySpawnSystem : EntityUpdateSystem
     {
         private readonly GraphicsDevice _graphicsDevice;
         private readonly EntityFactory _entityFactory;
         private readonly Random _random = new Random();
+        private ComponentMapper<EnemyComponent> _enemyComponentMapper;
 
-        public EnemySpawnSystem(GraphicsDevice graphicsDevice, EntityFactory entityFactory)
+        public EnemySpawnSystem(GraphicsDevice graphicsDevice, EntityFactory entityFactory) : base(Aspect.One(typeof(EnemyComponent)))
         {
             _graphicsDevice = graphicsDevice;
             _entityFactory = entityFactory;
         }
 
+        public override void Initialize(IComponentMapperService mapperService)
+        {
+            _enemyComponentMapper = mapperService.GetMapper<EnemyComponent>();
+        }
+
         public override void Update(GameTime gameTime)
         {
+            // Only allow 10 enemies
+            if (_enemyComponentMapper.Components.Count > 10)
+                return;
+
             var viewport = _graphicsDevice.Viewport;
             var entity = _entityFactory.CreateEnemyShip();
             var transform = entity.Get<Transform2>();
