@@ -28,6 +28,9 @@
     <PackageReference Include="MonoGame.Extended" Version="4.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Content\extendedlogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Content\song-lyrics.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

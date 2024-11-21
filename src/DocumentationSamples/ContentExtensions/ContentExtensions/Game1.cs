@@ -21,6 +21,7 @@ namespace ContentManager_Extensions
 
         // For demo of Content.OpenStream extension method
         private string songLyrics;
+        private Texture2D monoTextureManual;
 
         // For demo of Content.GetGraphicsDevice extension method
         private int deviceWidth;
@@ -38,11 +39,21 @@ namespace ContentManager_Extensions
             // For demo of Content.OpenStream extension method
             // song-lyrics.txt is in the Content Directory
             // And it's set to "copy to output directory" in the project
-            var stream = Content.OpenStream("song-lyrics.txt");
-            var reader = new StreamReader(stream);
-            songLyrics = reader.ReadToEnd();
-            reader.Close();
-            stream.Close();
+            using (var stream = Content.OpenStream("song-lyrics.txt"))
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    songLyrics = reader.ReadToEnd();
+                }
+            }
+
+            // For demo of Content.OpenStream extension method
+            // Using OpenStream to load an image, and create a texture2d from it
+            // Assumes the extendedlog.png has "copy to output directory" in the project
+            using (var stream = Content.OpenStream("extendedlogo.png"))
+            {
+                monoTextureManual = Texture2D.FromStream(GraphicsDevice, stream);
+            }
 
             // For demo of Content.GetGraphicsDevice extension method
             var graphicsDevice = Content.GetGraphicsDevice();
@@ -73,6 +84,8 @@ namespace ContentManager_Extensions
             _spriteBatch.Begin();
             _spriteBatch.DrawString(_font, songLyrics, new Vector2(5,5), Color.White);
             _spriteBatch.DrawString(_font, "Graphics Device Width:" + deviceWidth.ToString(), new Vector2(400, 5), Color.Blue);
+            _spriteBatch.Draw(monoTextureManual, new Vector2(400,100), Color.White);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
