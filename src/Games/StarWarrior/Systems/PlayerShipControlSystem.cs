@@ -59,9 +59,9 @@ namespace StarWarrior.Systems
             _missileLaunchTimer = TimeSpan.Zero;
         }
 
-        private void AddMissile(Transform2 parentTransform, float angle = 90.0f, float offsetX = 0.0f)
+        private void AddMissile(int ownerId, Transform2 parentTransform, float angle = 90.0f, float offsetX = 0.0f)
         {
-            var missile = _entityFactory.CreateMissile();
+            var missile = _entityFactory.CreateMissile(ownerId);
 
             var missileTransform = missile.Get<Transform2>();
             missileTransform.Position = parentTransform.WorldPosition + new Vector2(1 + offsetX, -20);
@@ -95,11 +95,6 @@ namespace StarWarrior.Systems
             if (keyboard.IsKeyDown(Keys.D) || keyboard.IsKeyDown(Keys.Right))
                 direction += Vector2.UnitX;
 
-            //if (keyboard.IsKeyDown(Keys.K) && !_lastState.IsKeyDown(Keys.K))
-            //{
-            //    BitmapFont.UseKernings = !BitmapFont.UseKernings;
-            //}
-
             var isMoving = direction != Vector2.Zero;
             if (isMoving)
             {
@@ -112,13 +107,13 @@ namespace StarWarrior.Systems
             if (keyboard.IsKeyDown(Keys.Space) || keyboard.IsKeyDown(Keys.Enter))
             {
                 _missileLaunchTimer += gameTime.ElapsedGameTime;
-                if (_missileLaunchTimer <= _missileLaunchDelay)
+                if (_missileLaunchTimer >= _missileLaunchDelay)
                 {
                     _missileLaunchTimer -= _missileLaunchDelay;
 
-                    AddMissile(transform);
-                    AddMissile(transform, 89, -9);
-                    AddMissile(transform, 91, +9);
+                    AddMissile(entityId, transform);
+                    AddMissile(entityId, transform, 89, -9);
+                    AddMissile(entityId, transform, 91, +9);
                 }
             }
 

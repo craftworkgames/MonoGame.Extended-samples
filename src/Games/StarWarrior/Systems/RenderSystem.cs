@@ -35,6 +35,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -76,7 +77,7 @@ namespace StarWarrior.Systems
                 if (!(worldPosition.X >= 0) || !(worldPosition.Y >= 0) ||
                     !(worldPosition.X < _spriteBatch.GraphicsDevice.Viewport.Width) ||
                     !(worldPosition.Y < _spriteBatch.GraphicsDevice.Viewport.Height))
-                    return;
+                    continue;
 
                 // very naive render ...
                 if (string.Compare("PlayerShip", spatialName, StringComparison.InvariantCultureIgnoreCase) == 0)
