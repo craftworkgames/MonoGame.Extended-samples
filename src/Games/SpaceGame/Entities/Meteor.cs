@@ -45,6 +45,7 @@ namespace SpaceGame.Entities
             RotationSpeed = rotationSpeed;
             HealthPoints = 1;
             Size = size;
+            _sprite.OriginNormalized = new Vector2(0.5f, 0.5f);
         }
 
         public void Damage(int damage)

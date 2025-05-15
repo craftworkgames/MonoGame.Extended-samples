@@ -206,6 +206,7 @@ namespace Tutorials.Screens
         public DemoBall(Sprite sprite) : base(sprite)
         {
             Bounds = new CircleF(Position + Offset, 60);
+            sprite.OriginNormalized = new Vector2(0.5f, 0.5f);
         }
 
         public override void OnCollision(CollisionEventArgs collisionInfo)

@@ -58,6 +58,7 @@ namespace SpaceGame.Entities
                 Position = new Vector2(400, 240)
             };
             BoundingCircle = new CircleF(_transform.Position, 20);
+            _sprite.OriginNormalized = new Vector2(0.5f, 0.5f);
         }
 
         public override void Update(GameTime gameTime)
