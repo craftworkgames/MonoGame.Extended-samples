@@ -35,6 +35,7 @@ namespace SpaceGame.Entities
             };
 
             Velocity = velocity;
+            _sprite.OriginNormalized = new Vector2(0.5f, 0.5f);
         }
 
         public override void Update(GameTime gameTime)

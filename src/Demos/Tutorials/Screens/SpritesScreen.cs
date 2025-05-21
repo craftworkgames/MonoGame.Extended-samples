@@ -36,6 +36,7 @@ namespace Tutorials.Screens
 
             var appleTexture = Content.Load<Texture2D>("Sprites/apple");
             _apple = new Sprite(appleTexture);
+            _apple.OriginNormalized = new Vector2(0.5f, 0.5f);
 
             var axeTexture = Content.Load<Texture2D>("Textures/axe");
             _axeSprite = new Sprite(axeTexture)
@@ -43,22 +44,26 @@ namespace Tutorials.Screens
                 Origin = new Vector2(243, 679),
                 //Position = new Vector2(400, 0),
                 //Scale = Vector2.One * 0.5f
+                OriginNormalized = new Vector2(0.5f, 0.5f)
             };
 
             var spikeyBallTexture = Content.Load<Texture2D>("Textures/spike_ball");
             _spikeyBallSprite = new Sprite(spikeyBallTexture)
             {
                 //Position = new Vector2(400, 340)
+                OriginNormalized = new Vector2(0.5f, 0.5f)
             };
 
             var particleTexture = Content.Load<Texture2D>("Textures/particle");
             _particleSprite0 = new Sprite(particleTexture)
             {
                 //Position = new Vector2(600, 340)
+                OriginNormalized = new Vector2(0.5f, 0.5f)
             };
             _particleSprite1 = new Sprite(particleTexture)
             {
                 //Position = new Vector2(200, 340)
+                OriginNormalized = new Vector2(0.5f, 0.5f)
             };
             _particleOpacity = 0.0f;
         }

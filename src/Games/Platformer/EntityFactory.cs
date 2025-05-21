@@ -92,7 +92,7 @@ namespace Platformer
             var entity = _world.CreateEntity();
             entity.Attach(new Body
             {
-                Position = new Vector2(x * width + width * 0.5f, y * height + height * 0.5f),
+                Position = new Vector2(x * width - width * 0.5f, y * height - height * 0.5f),
                 Size = new Vector2(width, height),
                 BodyType = BodyType.Static
             });

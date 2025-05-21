@@ -39,6 +39,7 @@ namespace Tutorials.Demos
 
             var logoTexture = Content.Load<Texture2D>("Textures/logo-square-128");
             _sprite = new Sprite(logoTexture);
+            _sprite.OriginNormalized = new Vector2(0.5f, 0.5f);
             _transform = new Transform2 { Position = viewportAdapter.Center.ToVector2()};
 
             _particleTexture = new Texture2D(GraphicsDevice, 1, 1);

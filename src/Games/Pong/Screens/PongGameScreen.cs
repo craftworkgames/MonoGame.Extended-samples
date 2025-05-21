@@ -144,10 +144,10 @@ namespace Pong.Screens
             if (ball.BoundingRectangle.Intersects(paddle.BoundingRectangle))
             {
                 if (ball.BoundingRectangle.Left < paddle.BoundingRectangle.Left)
-                    ball.Position.X = paddle.BoundingRectangle.Left - ball.BoundingRectangle.Width / 2;
+                    ball.Position.X = paddle.BoundingRectangle.Left - ball.BoundingRectangle.Width;
 
                 if (ball.BoundingRectangle.Right > paddle.BoundingRectangle.Right)
-                    ball.Position.X = paddle.BoundingRectangle.Right + ball.BoundingRectangle.Width / 2;
+                    ball.Position.X = paddle.BoundingRectangle.Right;
 
                 ball.Velocity.X = -ball.Velocity.X;
                 return true;
@@ -160,39 +160,41 @@ namespace Pong.Screens
         {
             _ball.Position += _ball.Velocity * elapsedSeconds;
 
-            var halfHeight = _ball.BoundingRectangle.Height / 2;
-            var halfWidth = _ball.BoundingRectangle.Width / 2;
-
             // top and bottom walls
             // TODO: Play 'tink' sound
-            if (_ball.Position.Y - halfHeight < 0)
+            if (_ball.Position.Y < 0)
             {
-                _ball.Position.Y = halfHeight;
+                _ball.Position.Y = 0;
                 _ball.Velocity.Y = -_ball.Velocity.Y;
             }
-
-            if (_ball.Position.Y + halfHeight > ScreenHeight)
+            
+            if (_ball.Position.Y + _ball.BoundingRectangle.Height > ScreenHeight)
             {
-                _ball.Position.Y = ScreenHeight - halfHeight;
+                _ball.Position.Y = ScreenHeight - _ball.BoundingRectangle.Height;
                 _ball.Velocity.Y = -_ball.Velocity.Y;
             }
 
             // left and right is out of bounds 
             // TODO: Play sound and update score
             // TODO: Reset ball to default velocity
-            if (_ball.Position.X > ScreenWidth + halfWidth && _ball.Velocity.X > 0)
+            if (_ball.Position.X > ScreenWidth - _ball.BoundingRectangle.Width && _ball.Velocity.X > 0)
             {
-                _ball.Position = new Vector2(ScreenWidth / 2f, ScreenHeight / 2f);
-                _ball.Velocity = new Vector2(_random.Next(2, 5) * -100, 100);
+                ResetBall(-1);
                 _leftScore++;
             }
 
-            if (_ball.Position.X < -halfWidth && _ball.Velocity.X < 0)
+            if (_ball.Position.X < 0 && _ball.Velocity.X < 0)
             {
-                _ball.Position = new Vector2(ScreenWidth / 2f, ScreenHeight / 2f);
-                _ball.Velocity = new Vector2(_random.Next(2, 5) * 100, 100);
+                ResetBall(1);
                 _rightScore++;
             }
+        }
+
+        private void ResetBall(int xDirection = -1)
+        {
+            _ball.Position = new Vector2(ScreenWidth / 2f + _ball.BoundingRectangle.Width / 2f
+                    , ScreenHeight / 2f + _ball.BoundingRectangle.Height / 2f);
+            _ball.Velocity = new Vector2(_random.Next(2, 5) * 100 * xDirection, 100);
         }
 
         private void ConstrainPaddle(Paddle paddle)
@@ -204,10 +206,10 @@ namespace Pong.Screens
                 paddle.Position.X = ScreenWidth - paddle.BoundingRectangle.Width / 2f;
 
             if (paddle.BoundingRectangle.Top < 0)
-                paddle.Position.Y = paddle.BoundingRectangle.Height / 2f;
+                paddle.Position.Y = 0 ;
 
             if (paddle.BoundingRectangle.Bottom > ScreenHeight)
-                paddle.Position.Y = ScreenHeight - paddle.BoundingRectangle.Height / 2f;
+                paddle.Position.Y = ScreenHeight - paddle.BoundingRectangle.Height ;
         }
 
         private void MovePaddleAi(Paddle paddle, float elapsedSeconds)
